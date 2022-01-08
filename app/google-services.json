@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1087884748195",
+    "project_id": "toptop-a4351",
+    "storage_bucket": "toptop-a4351.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087884748195:android:992eaf036244d4bf15e616",
+        "android_client_info": {
+          "package_name": "com.example.toptop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087884748195-7nn8r8vvmqihiak0f6f0gqbe3pdidnhe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.toptop",
+            "certificate_hash": "66bcc8f65201fdafd301d2f5b0ad6109a8bc08e0"
+          }
+        },
+        {
+          "client_id": "1087884748195-cqoduqh85rfpn4q1aqcsegvf1kdtklfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7NiyrX7QJzI496zSTYAv3cLdU6LlO6k8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087884748195-cqoduqh85rfpn4q1aqcsegvf1kdtklfk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

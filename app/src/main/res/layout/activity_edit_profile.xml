@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="16dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_gravity="top|left"
+        android:onClick="onBack"
+        android:src="@drawable/ic_backward"
+        android:layout_height="35dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|top"
+        android:layout_height="match_parent">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginTop="80dp"
+            android:id="@+id/img_update_avata"
+            android:layout_width="194dp"
+            android:layout_height="177dp"
+            android:src="@drawable/avatar" />
+
+        <EditText
+            android:id="@+id/ed_update_fullname"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="30dp"
+            android:hint="Full name"
+
+            />
+        <EditText
+            android:enabled="false"
+            android:id="@+id/ed_update_sdt"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="30dp"
+            android:hint="Number phone"
+
+            />
+        <Button
+            android:id="@+id/bt_update_profile"
+            android:layout_margin="15dp"
+            android:layout_marginTop="20sp"
+            android:text="Cap nhat thong tin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

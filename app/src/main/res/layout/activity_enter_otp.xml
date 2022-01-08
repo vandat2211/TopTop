@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".Register.RegisterUser">
+    <ImageView
+        android:layout_height="32dp"
+        android:layout_width="32dp"
+        android:src="@drawable/ic_backward"
+        android:padding="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OTP"
+        android:textSize="100sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xác nhận"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:id="@+id/textVerifyPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xác nhận qua số điện thoại 0964321028"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        />
+    <com.chaos.view.PinView
+        android:id="@+id/ed_otp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:itemCount="6"
+        app:itemWidth="50dp"
+        app:itemHeight="50dp"
+        app:lineColor="@color/white"
+        android:itemBackground="#EEF4F4"
+        style="@style/PinWidget.PinView"
+        android:inputType="number"
+        android:cursorVisible="true"
+        app:cursorColor="@color/black"
+        app:hideLineWhenFilled="true"
+        app:itemRadius="5dp"
+
+        />
+    <Button
+        android:id="@+id/bt_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Xác nhận"
+        android:backgroundTint="@color/black"
+        />
+    <TextView
+        android:id="@+id/tv_otp_again"
+        android:layout_width="wrap_content"
+        android:text="khong nhan dc ma Otp.Gui lai!"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
