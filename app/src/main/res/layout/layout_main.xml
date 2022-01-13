@@ -36,13 +36,14 @@
     <ImageView
         android:id="@+id/img_heart"
         android:layout_width="50dp"
+        android:onClick="Click_Heart1"
         android:layout_height="50dp"
         android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="@+id/user"
         app:layout_constraintStart_toStartOf="@+id/user"
         app:layout_constraintTop_toBottomOf="@+id/user"
-        app:srcCompat="@drawable/ic_baseline_favorite_24" />
-
+        android:src="@drawable/button_bg"
+        tools:ignore="OnClick" />
     <ImageView
         android:id="@+id/img_commen"
         android:layout_width="50dp"

@@ -40,7 +40,6 @@ public class EnterOtp extends AppCompatActivity {
     private String mphonenumber;
     private String mverificationId;
     private FirebaseAuth mAuth;
-    private DatabaseReference reference;
     private ProgressDialog progressDialog;
     private PhoneAuthProvider.ForceResendingToken mforceResendingToken;
     @Override
@@ -124,17 +123,12 @@ public class EnterOtp extends AppCompatActivity {
                             Log.e(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = task.getResult().getUser();
-                            reference= FirebaseDatabase.getInstance().getReference("users").child(mphonenumber);
-                            HashMap<String,String>hashMap=new HashMap<>();
-                            hashMap.put("id",mphonenumber);
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        gotoHome(user.getPhoneNumber());
-                                    }
-                                }
-                            });
+                            FirebaseDatabase database=FirebaseDatabase.getInstance();
+                            DatabaseReference myrefe1=database.getReference("users").child(mphonenumber).child("user_id");
+                            myrefe1.setValue(mphonenumber);
+                            gotoHome(user.getPhoneNumber());
+
+
                             // Update UI
 
                         } else {

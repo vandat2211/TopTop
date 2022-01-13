@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:padding="16dp"
     android:gravity="center"
+    android:id="@+id/liner_edit_profile"
     android:orientation="vertical"
     android:layout_height="match_parent"
     >

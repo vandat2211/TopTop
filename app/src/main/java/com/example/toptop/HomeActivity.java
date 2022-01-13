@@ -1,7 +1,9 @@
 package com.example.toptop;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.toptop.Fragment.Create_Fragment;
@@ -21,16 +24,24 @@ import com.example.toptop.Fragment.Home_Fragment;
 import com.example.toptop.Fragment.Mail_Fragment;
 import com.example.toptop.Fragment.Profile_Fragment;
 import com.example.toptop.Fragment.Search_Fragment;
+import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Register.RegisterUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     LinearLayout layoutBottom_sheet;
     private BottomSheetBehavior bottomSheetBehavior;
+    MediaObjectt media;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +49,12 @@ public class HomeActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //
         bottomNavigationView = findViewById(R.id.bottom_nav);
-        layoutBottom_sheet=findViewById(R.id.bottom_sheet_layout);
-         bottomSheetBehavior=BottomSheetBehavior.from(layoutBottom_sheet);
+        layoutBottom_sheet = findViewById(R.id.bottom_sheet_layout);
+        bottomSheetBehavior = BottomSheetBehavior.from(layoutBottom_sheet);
         //
         init();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame,new Home_Fragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, new Home_Fragment()).commit();
         //
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -51,22 +62,22 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        fragment=new Home_Fragment();
+                        fragment = new Home_Fragment();
                         break;
                     case R.id.action_search:
-                        fragment=new Search_Fragment();
+                        fragment = new Search_Fragment();
                         break;
                     case R.id.action_create:
-                        fragment=new Create_Fragment();
+                        fragment = new Create_Fragment();
                         break;
                     case R.id.action_mail:
-                        fragment=new Mail_Fragment();
+                        fragment = new Mail_Fragment();
                         break;
                     case R.id.action_profile:
-                        fragment=new Profile_Fragment();
+                        fragment = new Profile_Fragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame,fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame, fragment).commit();
                 return true;
             }
         });
@@ -97,8 +108,9 @@ public class HomeActivity extends AppCompatActivity {
         }
         win.setAttributes(params);
     }
+
     public void logout(View view) {
-        if(bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
+        if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
@@ -112,5 +124,10 @@ public class HomeActivity extends AppCompatActivity {
 
     public void Cancle(View view) {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    public void Click_Heart1(View view) {
+        view.startAnimation(AnimationUtils.loadAnimation(this, androidx.appcompat.R.anim.abc_fade_in));
+
     }
 }

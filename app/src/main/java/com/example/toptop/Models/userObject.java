@@ -1,17 +1,43 @@
 package com.example.toptop.Models;
 
 public class userObject {
-    private String user_id,user_name,phone,email,profileImage;
+    private int following,follower,sum_heart;
+    private String user_id,user_name,profileImage;
 
-    public userObject(String user_id, String user_name, String phone, String email, String profileImage) {
+    public userObject() {
+    }
+
+    public userObject(int following, int follower, int sum_heart, String user_id, String user_name, String profileImage) {
+        this.following = following;
+        this.follower = follower;
+        this.sum_heart = sum_heart;
         this.user_id = user_id;
         this.user_name = user_name;
-        this.phone = phone;
-        this.email = email;
         this.profileImage = profileImage;
     }
 
-    public userObject() {
+    public int getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(int following) {
+        this.following = following;
+    }
+
+    public int getFollower() {
+        return follower;
+    }
+
+    public void setFollower(int follower) {
+        this.follower = follower;
+    }
+
+    public int getSum_heart() {
+        return sum_heart;
+    }
+
+    public void setSum_heart(int sum_heart) {
+        this.sum_heart = sum_heart;
     }
 
     public String getUser_id() {
@@ -30,22 +56,6 @@ public class userObject {
         this.user_name = user_name;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getProfileImage() {
         return profileImage;
     }
@@ -53,4 +63,18 @@ public class userObject {
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
+
+    @Override
+    public String toString() {
+        return "userObject{" +
+                "following=" + following +
+                ", follower=" + follower +
+                ", sum_heart=" + sum_heart +
+                ", user_id='" + user_id + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", profileImage='" + profileImage + '\'' +
+                '}';
+    }
+
 }
+
