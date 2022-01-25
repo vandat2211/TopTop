@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/messagelayout"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_time"
+            android:textSize="12sp"
+            android:text="22/01/2022 05:59 PM"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_mess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_sender"
+            android:padding="15dp"
+            android:text="His Message"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_isseent"
+        android:layout_width="match_parent"
+        android:gravity="end"
+        android:text="delivered"
+        android:textAlignment="textEnd"
+        android:layout_height="wrap_content"/>
+
+
+
+</LinearLayout>

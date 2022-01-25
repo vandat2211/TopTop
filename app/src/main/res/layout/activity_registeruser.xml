@@ -36,5 +36,12 @@
         android:text="Xác nhận"
         android:backgroundTint="@color/black"
         />
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btLogin_google"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </com.google.android.gms.common.SignInButton>
 
 </LinearLayout>

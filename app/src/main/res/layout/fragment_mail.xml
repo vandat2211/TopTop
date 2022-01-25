@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9C27B0">
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    >
+    <include
+        android:id="@+id/toolbar_chat"
+        layout="@layout/toolbar_chat"/>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerView_mail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center"/>
 
-</RelativeLayout>
+</LinearLayout>

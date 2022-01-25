@@ -40,7 +40,6 @@
 
             />
         <EditText
-            android:enabled="false"
             android:id="@+id/ed_update_sdt"
             android:layout_margin="15dp"
             android:layout_width="match_parent"
@@ -48,6 +47,16 @@
             android:padding="10dp"
             android:layout_marginTop="30dp"
             android:hint="Number phone"
+
+            />
+        <EditText
+            android:id="@+id/ed_update_email"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="30dp"
+            android:hint="Email"
 
             />
         <Button

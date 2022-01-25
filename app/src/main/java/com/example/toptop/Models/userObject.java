@@ -1,42 +1,78 @@
 package com.example.toptop.Models;
 
 public class userObject {
-    private int following,follower,sum_heart;
-    private String user_id,user_name,profileImage;
+    private String following,follower,sum_heart;
+    private String user_id;
 
-    public userObject() {
+    public String getOnlineStatus() {
+        return onlineStatus;
     }
 
-    public userObject(int following, int follower, int sum_heart, String user_id, String user_name, String profileImage) {
+    public void setOnlineStatus(String onlineStatus) {
+        this.onlineStatus = onlineStatus;
+    }
+
+    private String onlineStatus;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
+    private String user_name;
+    private String profileImage;
+
+    public String getUser_phone() {
+        return user_phone;
+    }
+
+    public void setUser_phone(String user_phone) {
+        this.user_phone = user_phone;
+    }
+
+    private String user_phone;
+
+    public userObject(String following, String follower, String sum_heart, String user_id, String onlineStatus, String email, String user_name, String profileImage, String user_phone) {
         this.following = following;
         this.follower = follower;
         this.sum_heart = sum_heart;
         this.user_id = user_id;
+        this.onlineStatus = onlineStatus;
+        this.email = email;
         this.user_name = user_name;
         this.profileImage = profileImage;
+        this.user_phone = user_phone;
     }
 
-    public int getFollowing() {
+    public userObject() {
+    }
+
+
+    public String getFollowing() {
         return following;
     }
 
-    public void setFollowing(int following) {
+    public void setFollowing(String following) {
         this.following = following;
     }
 
-    public int getFollower() {
+    public String getFollower() {
         return follower;
     }
 
-    public void setFollower(int follower) {
+    public void setFollower(String follower) {
         this.follower = follower;
     }
 
-    public int getSum_heart() {
+    public String getSum_heart() {
         return sum_heart;
     }
 
-    public void setSum_heart(int sum_heart) {
+    public void setSum_heart(String sum_heart) {
         this.sum_heart = sum_heart;
     }
 
@@ -64,17 +100,6 @@ public class userObject {
         this.profileImage = profileImage;
     }
 
-    @Override
-    public String toString() {
-        return "userObject{" +
-                "following=" + following +
-                ", follower=" + follower +
-                ", sum_heart=" + sum_heart +
-                ", user_id='" + user_id + '\'' +
-                ", user_name='" + user_name + '\'' +
-                ", profileImage='" + profileImage + '\'' +
-                '}';
-    }
 
 }
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/layout_profile_video"
+    android:layout_height="150dp"
+  android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <VideoView
+        android:id="@+id/videoview1"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/img_heart"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="4dp"
+
+
+        android:onClick="Click_Heart1"
+        app:layout_constraintBottom_toBottomOf="@+id/videoview1"
+        app:layout_constraintStart_toStartOf="@+id/videoview1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/button_bg" />
+
+    <TextView
+        android:id="@+id/tv_soluotthich"
+        android:layout_width="50dp"
+        android:layout_height="21dp"
+        android:gravity="center"
+        android:text="35.1k"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/img_heart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/img_heart" />
+</androidx.constraintlayout.widget.ConstraintLayout>

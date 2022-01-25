@@ -2,9 +2,11 @@ package com.example.toptop;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,11 +19,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.toptop.Fragment.Create_Fragment;
 import com.example.toptop.Fragment.Home_Fragment;
+import com.example.toptop.Fragment.Home_customer_Fragment;
+import com.example.toptop.Fragment.Home_video_Fragment;
 import com.example.toptop.Fragment.Mail_Fragment;
+import com.example.toptop.Fragment.Open_Video_Fragment;
 import com.example.toptop.Fragment.Profile_Fragment;
 import com.example.toptop.Fragment.Search_Fragment;
 import com.example.toptop.Models.MediaObjectt;
@@ -36,12 +42,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements Create_Fragment.Isenddata {
     BottomNavigationView bottomNavigationView;
     LinearLayout layoutBottom_sheet;
     private BottomSheetBehavior bottomSheetBehavior;
     MediaObjectt media;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +56,9 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav);
         layoutBottom_sheet = findViewById(R.id.bottom_sheet_layout);
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottom_sheet);
+
         //
         init();
-
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, new Home_Fragment()).commit();
         //
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -81,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     private void init() {
@@ -127,7 +133,54 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void Click_Heart1(View view) {
-        view.startAnimation(AnimationUtils.loadAnimation(this, androidx.appcompat.R.anim.abc_fade_in));
 
+
+    }
+    public void onClickGoToVideo_Fragment(MediaObjectt media){
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        Open_Video_Fragment open_video_fragment=new Open_Video_Fragment();
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("MediaObjectt",media);
+        open_video_fragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.frame,open_video_fragment);
+        fragmentTransaction.addToBackStack(Profile_Fragment.TAG1);
+        fragmentTransaction.commit();
+    }
+
+    public void onClickGoToVideoHome_Fragment(MediaObjectt media){
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        Open_Video_Fragment open_video_fragment=new Open_Video_Fragment();
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("MediaObjectt1",media);
+        open_video_fragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.frame,open_video_fragment);
+        fragmentTransaction.addToBackStack(Home_customer_Fragment.TAG);
+        fragmentTransaction.commit();
+    }
+    public void onClickGoToVideoCustomer_Fragment(MediaObjectt media){
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        Home_customer_Fragment home_customer_fragment=new Home_customer_Fragment();
+        Bundle bundle1=new Bundle();
+        bundle1.putSerializable("MediaObjectt2",media);
+        home_customer_fragment.setArguments(bundle1);
+        fragmentTransaction.replace(R.id.frame,home_customer_fragment);
+        fragmentTransaction.addToBackStack(Home_video_Fragment.TAG2);
+        fragmentTransaction.commit();
+
+    }
+
+    public void customer(View view) {
+        view.startAnimation(AnimationUtils.loadAnimation(this, androidx.appcompat.R.anim.abc_fade_in));
+    }
+
+    @Override
+    public void senddata(String mhsat_task) {
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        Search_Fragment search_fragment=new Search_Fragment();
+        Bundle bundle1=new Bundle();
+        bundle1.putSerializable("hask_task",mhsat_task);
+        search_fragment.setArguments(bundle1);
+        fragmentTransaction.replace(R.id.frame,search_fragment);
+        fragmentTransaction.commit();
     }
 }

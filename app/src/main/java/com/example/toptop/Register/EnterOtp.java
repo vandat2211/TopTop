@@ -121,12 +121,21 @@ public class EnterOtp extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.e(TAG, "signInWithCredential:success");
-
-                            FirebaseUser user = task.getResult().getUser();
-                            FirebaseDatabase database=FirebaseDatabase.getInstance();
-                            DatabaseReference myrefe1=database.getReference("users").child(mphonenumber).child("user_id");
-                            myrefe1.setValue(mphonenumber);
-                            gotoHome(user.getPhoneNumber());
+                            FirebaseUser usert = mAuth.getCurrentUser();
+                            if(task.getResult().getAdditionalUserInfo().isNewUser()) {
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                HashMap<Object, String> hashMap = new HashMap<>();
+                                hashMap.put("email", "");
+                                hashMap.put("user_id", usert.getUid());
+                                hashMap.put("user_name", "");
+                                hashMap.put("onlineStatus","online");
+                                hashMap.put("typingTo","noOne");
+                                hashMap.put("user_phone", usert.getPhoneNumber());
+                                hashMap.put("profileImage", "");
+                                DatabaseReference myrefe1 = database.getReference("users").child(usert.getUid());
+                                myrefe1.setValue(hashMap);
+                            }
+                            gotoHome(usert.getPhoneNumber());
 
 
                             // Update UI

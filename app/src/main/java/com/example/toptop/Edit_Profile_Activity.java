@@ -5,7 +5,9 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -23,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.toptop.Fragment.Home_video_Fragment;
 import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.userObject;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,21 +47,24 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Edit_Profile_Activity extends AppCompatActivity {
+    private List<MediaObjectt> mediaObjecttList;
     public static final int MY_REQUEST_CODE = 10;
     private ImageView img_avata;
-    EditText ed_fullname, ed_sdt;
+    EditText ed_fullname, ed_sdt,ed_email;
     Button bt_update;
     private Uri uri;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser usert = FirebaseAuth.getInstance().getCurrentUser();
     //Firebase
+    MediaObjectt media;
     FirebaseStorage storage;
-    String child = usert.getPhoneNumber();
+    String child = usert.getUid();
     StorageReference storageReference;
-    private MediaObjectt media;
     private ProgressDialog progressDialog;
     final private ActivityResultLauncher<Intent> mactivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
@@ -95,7 +101,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
     private void setUserInfomation() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users").child(usert.getPhoneNumber());
+        DatabaseReference myRef = database.getReference("users").child(usert.getUid());
         if (usert == null) {
             return;
         }
@@ -104,8 +110,9 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userObject user = snapshot.getValue(userObject.class);
                 ed_fullname.setText(user.getUser_name());
-                ed_sdt.setText(usert.getPhoneNumber());
-                Glide.with(Edit_Profile_Activity.this).load(usert.getPhotoUrl()).error(R.drawable.avatar).into(img_avata);
+                ed_sdt.setText(user.getUser_phone());
+                ed_email.setText(user.getEmail());
+                Glide.with(Edit_Profile_Activity.this).load(user.getProfileImage()).error(R.drawable.avatar).into(img_avata);
             }
 
             @Override
@@ -114,12 +121,14 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void init() {
         img_avata = findViewById(R.id.img_update_avata);
         ed_fullname = findViewById(R.id.ed_update_fullname);
         ed_sdt = findViewById(R.id.ed_update_sdt);
+        ed_email= findViewById(R.id.ed_update_email);
         bt_update = findViewById(R.id.bt_update_profile);
         progressDialog = new ProgressDialog(this);
 
@@ -166,6 +175,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
     private void onClickUpdateProfile() {
         String strFullname = ed_fullname.getText().toString().trim();
+        String strphone = ed_sdt.getText().toString().trim();
+        String stremail = ed_email.getText().toString().trim();
         if (usert == null) {
             return;
         }
@@ -180,14 +191,11 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
-                            DatabaseReference myrefe = database.getReference("users").child(child).child("user_name");
-                            myrefe.setValue(strFullname);
-                                    String key=String.valueOf(media.getVideo_id());
-                                    MediaObjectt media=new MediaObjectt(strFullname);
-                                    DatabaseReference img1 = database.getReference("videos");
-                                    img1.updateChildren(media.toMap());
+                            DatabaseReference myrefe = database.getReference("users").child(child);
+                            myrefe.child("user_name").setValue(strFullname);
+                            myrefe.child("user_phone").setValue(strphone);
+                            myrefe.child("email").setValue(stremail);
                             uploadImage();
-
                         }
                     }
                 });
@@ -208,19 +216,12 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    String strFullname = ed_fullname.getText().toString().trim();
                                     DatabaseReference img = database.getReference("users").child(child).child("profileImage");
                                     img.setValue(uri.toString());
-//                                    MediaObjectt media=new MediaObjectt(strFullname,uri.toString());
-//                                    DatabaseReference img1 = database.getReference("videos");
-//                                    img1.child(String.valueOf(media.getVideo_id())).updateChildren(media.toMap());
-
                                 }
                             });
                             progressDialog.dismiss();
-
                             Toast.makeText(Edit_Profile_Activity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Edit_Profile_Activity.this, HomeActivity.class));
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -236,9 +237,16 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
                             progressDialog.setMessage("Uploaded " + (int) progress + "%");
+
+
                         }
+
                     });
+
         }
+
+
+
     }
 
 
@@ -263,7 +271,6 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
         startActivity(new Intent(Edit_Profile_Activity.this, HomeActivity.class));
     }
-
     public void setMedia(MediaObjectt media) {
         this.media = media;
     }
