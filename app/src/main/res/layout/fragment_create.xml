@@ -17,24 +17,33 @@
         android:inputType="textPersonName|textCapSentences"
         android:padding="10dp"
         android:textColor="@color/black" />
-
-    <EditText
-        android:id="@+id/ed_hast_task"
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_below="@id/ed_des_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ed_des_video"
-        android:background="#DCEAF1"
-        android:hint="Enter hast task"
-        android:inputType="textPersonName|textCapSentences"
         android:padding="10dp"
-        android:textColor="@color/black" />
+        android:background="#DCEAF1"
+
+        />
+
+<!--    <EditText-->
+<!--        android:id="@+id/ed_hast_task"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/ed_des_video"-->
+<!--        android:background="#DCEAF1"-->
+<!--        android:hint="Enter hast task"-->
+<!--        android:inputType="textPersonName|textCapSentences"-->
+<!--        android:padding="10dp"-->
+<!--        android:textColor="@color/black" />-->
 
     <VideoView
         android:id="@+id/video_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bt_uploadvideo"
-        android:layout_below="@id/ed_hast_task"
+        android:layout_below="@id/spinner1"
         android:layout_marginTop="5dp" />
 
     <Button

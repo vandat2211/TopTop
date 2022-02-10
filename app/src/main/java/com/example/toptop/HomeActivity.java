@@ -42,7 +42,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class HomeActivity extends AppCompatActivity implements Create_Fragment.Isenddata {
+public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     LinearLayout layoutBottom_sheet;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -173,14 +173,4 @@ public class HomeActivity extends AppCompatActivity implements Create_Fragment.I
         view.startAnimation(AnimationUtils.loadAnimation(this, androidx.appcompat.R.anim.abc_fade_in));
     }
 
-    @Override
-    public void senddata(String mhsat_task) {
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        Search_Fragment search_fragment=new Search_Fragment();
-        Bundle bundle1=new Bundle();
-        bundle1.putSerializable("hask_task",mhsat_task);
-        search_fragment.setArguments(bundle1);
-        fragmentTransaction.replace(R.id.frame,search_fragment);
-        fragmentTransaction.commit();
-    }
 }

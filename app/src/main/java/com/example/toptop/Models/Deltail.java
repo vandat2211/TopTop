@@ -4,11 +4,15 @@ import java.util.List;
 
 public class Deltail {
     private String hast_task_name;
-    private List<MediaObjectt> media;
+    private List<MediaObjectt> mediaObjecttList;
 
-    public Deltail(String namehasttask, List<MediaObjectt> media) {
+    public Deltail(String namehasttask, List<MediaObjectt> mediaObjecttList) {
         this.hast_task_name = namehasttask;
-        this.media = media;
+        this.mediaObjecttList = mediaObjecttList;
+    }
+
+    public Deltail() {
+
     }
 
     public String getNamehasttask() {
@@ -20,10 +24,10 @@ public class Deltail {
     }
 
     public List<MediaObjectt> getMedia() {
-        return media;
+        return mediaObjecttList;
     }
 
     public void setMedia(List<MediaObjectt> media) {
-        this.media = media;
+        this.mediaObjecttList = media;
     }
 }

@@ -16,9 +16,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MediaController;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -49,6 +52,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.transform.Result;
@@ -68,16 +72,13 @@ public class Create_Fragment extends Fragment {
     private Uri videouri;//uri of piked video
     private ProgressDialog progressDialog;
     private String des,hast_task;
+    private Spinner spinner;
     //user info
     String name,email,uid,dp;
     //
     FirebaseAuth firebaseAuth;
     DatabaseReference userdbref;
     //
-    private Isenddata misenddata;
-    public interface Isenddata{
-        void senddata(String mhsat_task);
-    }
     public static final String TAG5 = Home_customer_Fragment.class.getName();
     @Nullable
     @Override
@@ -85,7 +86,7 @@ public class Create_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create, container, false);
         getParentFragmentManager().popBackStack();
         eddess=view.findViewById(R.id.ed_des_video);
-        edhasttask=view.findViewById(R.id.ed_hast_task);
+        spinner=view.findViewById(R.id.spinner1);
         videoViewpost=view.findViewById(R.id.video_post);
         btupload_videi=view.findViewById(R.id.bt_uploadvideo);
         pickvideoFab=view.findViewById(R.id.pickVideoFab);
@@ -93,6 +94,30 @@ public class Create_Fragment extends Fragment {
         progressDialog.setTitle("Please wait");
         progressDialog.setMessage("UpLoading Video");
         progressDialog.setCanceledOnTouchOutside(false);
+        //
+        ArrayList<String> dsDiadiem =new ArrayList<String>();
+        dsDiadiem.add("#tet");
+        dsDiadiem.add("#vui ve");
+        dsDiadiem.add("#buon");
+        dsDiadiem.add("#cover");
+        dsDiadiem.add("#hoc");
+        dsDiadiem.add("#nha");
+        ArrayAdapter adapterr =new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,dsDiadiem);
+        //cho chu cach ra
+        adapterr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //do adapter vao spinner
+        spinner.setAdapter(adapterr);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                hast_task=dsDiadiem.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         //
         firebaseAuth=FirebaseAuth.getInstance();
         checkUserStatus();
@@ -121,7 +146,6 @@ public class Create_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 des=eddess.getText().toString().trim();
-                hast_task=edhasttask.getText().toString().trim();
                 if(TextUtils.isEmpty(des)){
                     Toast.makeText(getActivity(),"des is required...",Toast.LENGTH_SHORT).show();
                 }
@@ -131,9 +155,7 @@ public class Create_Fragment extends Fragment {
                 }
                 else {
                     //upload video
-                    uploadVideoFirebase();
-                    sendDataToSearchFragment();
-                }
+                    uploadVideoFirebase(); }
             }
         });
         //click get video from camera/gallery
@@ -146,11 +168,6 @@ public class Create_Fragment extends Fragment {
 
         return view;
     }
-
-    private void sendDataToSearchFragment() {
-        misenddata.senddata(hast_task);
-    }
-
     private void uploadVideoFirebase() {
 //show process
         progressDialog.show();
@@ -217,10 +234,7 @@ public class Create_Fragment extends Fragment {
                         Toast.makeText(getActivity(),""+e.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
-        DatabaseReference ref1= FirebaseDatabase.getInstance().getReference("hasttask");
-        HashMap<String,Object>hashMap1=new HashMap<>();
-        hashMap1.put("hast_task_name",""+hast_task);
-        ref1.child(hast_task.substring(1)).setValue(hashMap1);
+
 
     }
 
@@ -344,9 +358,4 @@ public class Create_Fragment extends Fragment {
         checkUserStatus();
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        misenddata= (Isenddata) getActivity();//khoi tao interface
-    }
 }

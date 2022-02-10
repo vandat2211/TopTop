@@ -1,5 +1,6 @@
 package com.example.toptop.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +15,24 @@ import com.example.toptop.R;
 import java.util.List;
 
 public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.SearchViewHolder>{
-    private List<MediaObjectt> mdlist;
-    public void setdata(List<MediaObjectt> md){
-        this.mdlist=md;
+    private List<MediaObjectt> mediaObjecttList;
+    public void setdata(List<MediaObjectt> mediaObjecttList){
+        this.mediaObjecttList=mediaObjecttList;
         notifyDataSetChanged();
     }
+
+
 
     @NonNull
     @Override
     public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_search, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_search_video, parent, false);
         return new SearchViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-    MediaObjectt media=mdlist.get(position);
+    MediaObjectt media=mediaObjecttList.get(position);
     if(media==null){
         return;
     }
@@ -45,17 +48,19 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.SearchVi
 
     @Override
     public int getItemCount() {
-        if(mdlist!=null){
-            return mdlist.size();
+        if(mediaObjecttList!=null){
+            return mediaObjecttList                                                                                                                                                                                                                                                                                                                                                                                                                         .size();
         }
         return 0;
     }
 
-    public class SearchViewHolder extends RecyclerView.ViewHolder {
+    public class SearchViewHolder extends RecyclerView.ViewHolder  {
         VideoView videoView;
         public SearchViewHolder(@NonNull View itemView) {
             super(itemView);
             videoView = itemView.findViewById(R.id.videoview_deltail);
         }
+
+
     }
 }
