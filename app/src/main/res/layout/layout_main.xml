@@ -36,24 +36,23 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/img_heart"
+        android:id="@+id/img_heart_main"
         android:layout_width="50dp"
-        android:onClick="Click_Heart1"
         android:layout_height="50dp"
         android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="@+id/user"
         app:layout_constraintStart_toStartOf="@+id/user"
         app:layout_constraintTop_toBottomOf="@+id/user"
-        app:srcCompat="@drawable/button_bg"
-        tools:ignore="OnClick" />
+        android:src="@drawable/button_bg"
+        />
     <ImageView
         android:id="@+id/img_commen"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/img_heart"
-        app:layout_constraintStart_toStartOf="@+id/img_heart"
-        app:layout_constraintTop_toBottomOf="@+id/img_heart"
+        app:layout_constraintEnd_toEndOf="@+id/img_heart_main"
+        app:layout_constraintStart_toStartOf="@+id/img_heart_main"
+        app:layout_constraintTop_toBottomOf="@+id/img_heart_main"
         app:srcCompat="@drawable/ic_baseline_comment_24" />
     <TextView
         android:id="@+id/tv_commen"
@@ -89,10 +88,10 @@
         android:textColor="@color/white"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/img_heart"
+        app:layout_constraintEnd_toEndOf="@+id/img_heart_main"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/img_heart"
-        app:layout_constraintTop_toBottomOf="@+id/img_heart" />
+        app:layout_constraintStart_toStartOf="@+id/img_heart_main"
+        app:layout_constraintTop_toBottomOf="@+id/img_heart_main" />
 
     <ImageView
         android:id="@+id/img_follow"

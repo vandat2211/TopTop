@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +34,7 @@ import java.util.List;
 
 public class Mail_Fragment extends Fragment {
     Toolbar toolbar;
+    private TextView tv_tool_bar;
     SearchView searchView;
     RecyclerView re;
     user_mail_Adapter adapter;
@@ -42,6 +45,7 @@ public class Mail_Fragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_mail,container,false);
         re=view.findViewById(R.id.recyclerView_mail);
         toolbar=view.findViewById(R.id.toolbar_chat);
+        tv_tool_bar = view.findViewById(R.id.tv_tool_bar);
         searchView=view.findViewById(R.id.searchview);
         re.setHasFixedSize(true);
         re.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -50,6 +54,19 @@ public class Mail_Fragment extends Fragment {
          getAllUsers();
         adapter=new user_mail_Adapter(getActivity(),userObjectList);
         re.setAdapter(adapter);
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_tool_bar.setVisibility(View.INVISIBLE);
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                tv_tool_bar.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
              @Override
              public boolean onQueryTextSubmit(String query) {

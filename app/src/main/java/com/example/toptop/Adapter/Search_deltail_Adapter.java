@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,20 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptop.Models.Deltail;
 import com.example.toptop.Models.MediaObjectt;
+import com.example.toptop.Models.userObject;
 import com.example.toptop.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Search_deltail_Adapter extends RecyclerView.Adapter<Search_deltail_Adapter.Search_deltailViewHolder>{
+public class Search_deltail_Adapter extends RecyclerView.Adapter<Search_deltail_Adapter.Search_deltailViewHolder> implements Filterable {
 
     private Context context;
     private List<Deltail>deltailList;
+    List<Deltail> deltailList1;
 
     public Search_deltail_Adapter(Context context) {
         this.context = context;
     }
     public void setdata(List<Deltail> deltailList){
         this.deltailList=deltailList;
+        this.deltailList1=deltailList;
     }
 
     @NonNull
@@ -56,6 +62,36 @@ public class Search_deltail_Adapter extends RecyclerView.Adapter<Search_deltail_
             return deltailList.size() ;
         }
         return 0;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String ssearch=constraint.toString();
+                if(ssearch.isEmpty()){
+                    deltailList=deltailList1;
+                }else {
+                    List<Deltail> list=new ArrayList<>();
+                    for(Deltail us:deltailList1){
+                        if(us.getNamehasttask().toLowerCase().contains(ssearch.toLowerCase())){
+                            list.add(us);
+                        }
+                    }
+                    deltailList=list;
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=deltailList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                deltailList=(List<Deltail>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class Search_deltailViewHolder extends RecyclerView.ViewHolder {

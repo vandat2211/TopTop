@@ -43,7 +43,8 @@ public class Chat_Adapter extends RecyclerView.Adapter<Chat_Adapter.MyHolder> {
     Context context;
     List<Chat> chatList;
     String imageUrl;
-FirebaseUser fuser;
+    FirebaseUser fuser;
+
     public Chat_Adapter(Context context, List<Chat> chatList, String imageUrl) {
         this.context = context;
         this.chatList = chatList;
@@ -53,39 +54,38 @@ FirebaseUser fuser;
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        if(i==MSG_TYPE_RIGHT){
-            View view= LayoutInflater.from(context).inflate(R.layout.row_chat_right,parent,false);
+        if (i == MSG_TYPE_RIGHT) {
+            View view = LayoutInflater.from(context).inflate(R.layout.row_chat_right, parent, false);
             return new MyHolder(view);
-        }
-        else{
-            View view= LayoutInflater.from(context).inflate(R.layout.row_chat_left,parent,false);
+        } else {
+            View view = LayoutInflater.from(context).inflate(R.layout.row_chat_left, parent, false);
             return new MyHolder(view);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") int position) {
-String mes=chatList.get(position).getMessage();
-String timestamp=chatList.get(position).getTimestamp();
+        String mes = chatList.get(position).getMessage();
+        String timestamp = chatList.get(position).getTimestamp();
 
-        Calendar cal= Calendar.getInstance(Locale.ENGLISH);
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(timestamp));
-        String datetime= DateFormat.format("dd/MM/yyyy hh:mm aa",cal).toString();
+        String datetime = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString();
 
         holder.tv_message.setText(mes);
         holder.tv_time.setText(datetime);
-      try {
-          Picasso.get().load(imageUrl).into(holder.img);
-      }catch (Exception e){
+        try {
+            Picasso.get().load(imageUrl).into(holder.img);
+        } catch (Exception e) {
 
-      }
+        }
 
-      //click to show delete dialog
+        //click to show delete dialog
         holder.messagelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Delete");
                 builder.setMessage("Are you sure to delete message ?");
                 //delete button
@@ -108,30 +108,28 @@ String timestamp=chatList.get(position).getTimestamp();
         });
 
 
-      //set seen/delivered status
-        if(position==chatList.size()-1){
-            if(chatList.get(position).isSeen()){
+        //set seen/delivered status
+        if (position == chatList.size() - 1) {
+            if (chatList.get(position).isSeen()) {
                 holder.tv_isSeen.setText("Seen");
+            } else {
+                holder.tv_isSeen.setText("Delivered");
             }
-            else {
-            holder.tv_isSeen.setText("Delivered");
-        }
-        }
-        else {
-            holder.tv_isSeen.setVisibility( View.GONE);
+        } else {
+            holder.tv_isSeen.setVisibility(View.GONE);
         }
     }
 
     private void DeleteMes(int position) {
-        String myUid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String msgTimestamp=chatList.get(position).getTimestamp();
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("chats");
-        Query queryy=ref.orderByChild("timestamp").equalTo(msgTimestamp);
+        String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String msgTimestamp = chatList.get(position).getTimestamp();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("chats");
+        Query queryy = ref.orderByChild("timestamp").equalTo(msgTimestamp);
         queryy.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds:snapshot.getChildren()){
-                    if(ds.child("sender").getValue().equals(myUid)){
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds.child("sender").getValue().equals(myUid)) {
                         //remove the message from chats
                         ds.getRef().removeValue();
                         //set the value of message"this message was delete...
@@ -140,10 +138,9 @@ String timestamp=chatList.get(position).getTimestamp();
 //                        ds.getRef().updateChildren(hashMap);
 
 
-                        Toast.makeText(context,"Message delete...",Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(context,"You can't this message.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Message delete...", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "You can't this message.", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -163,26 +160,26 @@ String timestamp=chatList.get(position).getTimestamp();
 
     @Override
     public int getItemViewType(int position) {
-        fuser= FirebaseAuth.getInstance().getCurrentUser();
-        if(chatList.get(position).getSender().equals(fuser.getUid())){
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (chatList.get(position).getSender().equals(fuser.getUid())) {
             return MSG_TYPE_RIGHT;
-        }
-        else {
+        } else {
             return MSG_TYPE_LEFT;
         }
     }
 
-    class MyHolder extends RecyclerView.ViewHolder{
+    class MyHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView tv_message,tv_time,tv_isSeen;
+        TextView tv_message, tv_time, tv_isSeen;
         LinearLayout messagelayout;
+
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            img=itemView.findViewById(R.id.imgnameuser);
-            tv_message=itemView.findViewById(R.id.tv_mess);
-            tv_time=itemView.findViewById(R.id.tv_time);
-            tv_isSeen=itemView.findViewById(R.id.tv_isseent);
-            messagelayout=itemView.findViewById(R.id.messagelayout);
+            img = itemView.findViewById(R.id.imgnameuser);
+            tv_message = itemView.findViewById(R.id.tv_mess);
+            tv_time = itemView.findViewById(R.id.tv_time);
+            tv_isSeen = itemView.findViewById(R.id.tv_isseent);
+            messagelayout = itemView.findViewById(R.id.messagelayout);
 
         }
     }

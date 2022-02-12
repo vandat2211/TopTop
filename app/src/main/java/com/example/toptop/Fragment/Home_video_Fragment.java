@@ -19,6 +19,8 @@ import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.My_interface.Onclick_Item_Video_profile;
 import com.example.toptop.R;
 import com.firebase.ui.database.FirebaseArray;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,6 +57,7 @@ private List<MediaObjectt> mediaObjecttList;
         return view;
     }
     private void getMediafromReatimeDatabase(){
+        FirebaseUser fuser= FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database=FirebaseDatabase.getInstance();
         DatabaseReference myRef=database.getReference("videos");
         myRef.addChildEventListener(new ChildEventListener() {
@@ -63,8 +66,11 @@ private List<MediaObjectt> mediaObjecttList;
 
                 MediaObjectt mediaObjectt=snapshot.getValue(MediaObjectt.class);
                 if(mediaObjectt!=null){
-                    mediaObjecttList.add(mediaObjectt);
-                    adapter.notifyDataSetChanged();
+                    if(!mediaObjectt.getUser_id().equals(fuser.getUid())){
+                        mediaObjecttList.add(mediaObjectt);
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }
             }
 

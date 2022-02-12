@@ -5,10 +5,13 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,8 +38,10 @@ import java.util.List;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class Search_Fragment extends Fragment {
+    Toolbar mtoolbar;
     private ViewPager2 mviewPager2;
     private CircleIndicator3 circleIndicator3;
+    SearchView msearchView;
     private Handler mhandler=new Handler();
     private Runnable mrunnable=new Runnable() {
         @Override
@@ -61,6 +66,8 @@ public class Search_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         //init
         //
+        mtoolbar=view.findViewById(R.id.toolbar_chat);
+        msearchView=view.findViewById(R.id.searchview);
         mviewPager2 = view.findViewById(R.id.slide_search);
         circleIndicator3 = view.findViewById(R.id.circle_indicator3);
         mphotoList = getlistPhoto();
@@ -85,6 +92,32 @@ public class Search_Fragment extends Fragment {
         rcv_search_deltail.setLayoutManager(linearLayoutManager);
         adapter.setdata(getListdeltail());
         rcv_search_deltail.setAdapter(adapter);
+        msearchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_tool_bar.setVisibility(View.INVISIBLE);
+            }
+        });
+        msearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                tv_tool_bar.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+        msearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return view;
     }
 

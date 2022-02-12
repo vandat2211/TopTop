@@ -1,14 +1,12 @@
 package com.example.toptop.Fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,20 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.toptop.Adapter.Video_profile_Adapter;
-import com.example.toptop.Adapter.videoAdapter;
 import com.example.toptop.Edit_Profile_Activity;
 import com.example.toptop.HomeActivity;
-import com.example.toptop.MainActivity;
 import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.userObject;
+import com.example.toptop.My_interface.OnLongclick_Item_Video_profile;
 import com.example.toptop.My_interface.Onclick_Item_Video_profile;
 import com.example.toptop.R;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -117,9 +111,15 @@ public class Profile_Fragment extends Fragment {
         adapter = new Video_profile_Adapter(mediaObjecttList, new Onclick_Item_Video_profile() {
             @Override
             public void onClickItemVideo(MediaObjectt media) {
-                mhomeActivity.onClickGoToVideo_Fragment(media);
+                mhomeActivity.onClickGoToOpenVideo_Fragment(media);
+
             }
-        });
+        }, new OnLongclick_Item_Video_profile() {
+            @Override
+            public void onClickItemVideo(MediaObjectt media) {
+                mhomeActivity.onClickGoToCreate_Fragment(media);
+            }
+        },getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);

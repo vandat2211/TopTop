@@ -132,11 +132,7 @@ public class HomeActivity extends AppCompatActivity {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    public void Click_Heart1(View view) {
-
-
-    }
-    public void onClickGoToVideo_Fragment(MediaObjectt media){
+    public void onClickGoToOpenVideo_Fragment(MediaObjectt media){
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         Open_Video_Fragment open_video_fragment=new Open_Video_Fragment();
         Bundle bundle=new Bundle();
@@ -165,6 +161,16 @@ public class HomeActivity extends AppCompatActivity {
         home_customer_fragment.setArguments(bundle1);
         fragmentTransaction.replace(R.id.frame,home_customer_fragment);
         fragmentTransaction.addToBackStack(Home_video_Fragment.TAG2);
+        fragmentTransaction.commit();
+
+    }
+    public void onClickGoToCreate_Fragment(MediaObjectt media){
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        Create_Fragment create_fragment=new Create_Fragment();
+        Bundle bundle3=new Bundle();
+        bundle3.putSerializable("MediaObjectt3",media);
+        create_fragment.setArguments(bundle3);
+        fragmentTransaction.replace(R.id.frame,create_fragment);
         fragmentTransaction.commit();
 
     }

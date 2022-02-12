@@ -18,13 +18,10 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/img_heart"
+        android:id="@+id/img_heartt"
         android:layout_width="20dp"
         android:layout_height="30dp"
         android:layout_marginStart="4dp"
-
-
-        android:onClick="Click_Heart1"
         app:layout_constraintBottom_toBottomOf="@+id/videoview1"
         app:layout_constraintStart_toStartOf="@+id/videoview1"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,8 +38,8 @@
         android:textSize="15dp"
         android:textStyle="bold"
 
-        app:layout_constraintBottom_toBottomOf="@+id/img_heart"
+        app:layout_constraintBottom_toBottomOf="@+id/img_heartt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_heart" />
+        app:layout_constraintStart_toEndOf="@+id/img_heartt" />
 </androidx.constraintlayout.widget.ConstraintLayout>
