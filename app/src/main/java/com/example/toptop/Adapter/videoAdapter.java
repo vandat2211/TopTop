@@ -1,7 +1,10 @@
 package com.example.toptop.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +19,16 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.toptop.CommentActivity;
+import com.example.toptop.HomeActivity;
 import com.example.toptop.Models.MediaObjectt;
-import com.example.toptop.Models.userObject;
 import com.example.toptop.My_interface.Onclick_Item_Video_profile;
 import com.example.toptop.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,8 +48,10 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
     String myuId;
     private DatabaseReference likeRef;
     private DatabaseReference videosRef;
+    private DatabaseReference FollowRef;
+    private DatabaseReference userRef;
     boolean mProcessLike = false;
-
+    boolean mProcessfollow = false;
     public videoAdapter(List<MediaObjectt> mediaObjecttList, Onclick_Item_Video_profile iclick_Item_video, Context context) {
         this.mediaObjecttList = mediaObjecttList;
         this.iclick_Item_video = iclick_Item_video;
@@ -54,7 +59,8 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
         myuId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         likeRef = FirebaseDatabase.getInstance().getReference().child("likes");
         videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
-
+        FollowRef=FirebaseDatabase.getInstance().getReference().child("follows");
+        userRef=FirebaseDatabase.getInstance().getReference().child("users");
     }
 
 
@@ -82,6 +88,8 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
         Glide.with(context).load(media.getProfileImage()).into(holder.img);
         Glide.with(context).load(media.getProfileImage()).into(holder.img2);
         holder.amthanh.startAnimation(holder.a);
+      //
+        //
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +125,9 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
                                 likeRef.child(videoId).child(myuId).setValue("Liked");
                                 mProcessLike=false;
                             }
+
                         }
+
 
                     }
 
@@ -130,30 +140,88 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
             }
         });
         final String videoId = mediaObjecttList.get(position).getVideo_id();
-//        setlikes(holder,videoId);
+        setlikes(holder,videoId);
+        holder.img_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProcessfollow=true;
+                String muserId = mediaObjecttList.get(position).getUser_id();
+                FollowRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(mProcessfollow){
+                        if (snapshot.child(muserId).hasChild(myuId)) {
+                            FollowRef.child(muserId).child(myuId).removeValue();
+                            mProcessfollow = false;
 
+                        } else {
+                            FollowRef.child(muserId).child(myuId).setValue("1");
+                            mProcessfollow = false;
+                        }
+                    }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+       final String muserId = mediaObjecttList.get(position).getUser_id();
+       setfollows(holder,muserId);
+       holder.img_comments.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Activity activity = (Activity) context;
+               Intent intent=new Intent(context, CommentActivity.class);
+               intent.putExtra("oj",media.getVideo_id());
+               intent.putExtra("ojj",media.getUser_id());
+               intent.putExtra("ojjj",media.getUser_name());
+               activity.startActivity(intent);
+               //hieu ung
+               activity.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+               //
+           }
+       });
     }
+    private void setlikes(videoViewHolder holder, String videoId) {
+        likeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(videoId).hasChild(myuId)){
+                    holder.img_heart.setColorFilter(ContextCompat.getColor(context,R.color.red), PorterDuff.Mode.MULTIPLY);
+                }
+                else {
+                    holder.img_heart.setColorFilter(ContextCompat.getColor(context,R.color.white), PorterDuff.Mode.MULTIPLY);
 
-//    private void setlikes(videoViewHolder holder, String videoId) {
-//        likeRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.child(videoId).hasChild(myuId)){
-//                    holder.img_heart.setColorFilter(R.drawable.ic_baseline_favorite_24);
-//                }
-//                else {
-//                    holder.img_heart.setColorFilter(R.drawable.ic_baseline_favorite);
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void setfollows(videoViewHolder holder, String muserId) {
+        FollowRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(muserId).hasChild(myuId)){
+                    holder.img_follow.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    holder.img_follow.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     @Override
     public int getItemCount() {
         if (mediaObjecttList != null) {
@@ -168,14 +236,17 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
         MediaPlayer mediaPlayer;
         private CircleImageView circleImageView;
         VideoView videoView;
-        ImageView img, img2,img_heart;
+        ImageView img, img2,img_heart,img_follow,img_comments;
         TextView users, des, tim, comeen, amthanh, hasttask;
         ProgressBar progressBar;
         MediaController controller;
+        private HomeActivity mhomeActivity;
 
         public videoViewHolder(@NonNull View itemView) {
             super(itemView);
             img_heart=itemView.findViewById(R.id.img_heart_main);
+            img_follow=itemView.findViewById(R.id.img_follow);
+            img_comments=itemView.findViewById(R.id.img_comments);
             circleImageView = itemView.findViewById(R.id.img_amthanh);
             videoView = itemView.findViewById(R.id.videoview);
             users = itemView.findViewById(R.id.tv_users);
@@ -189,6 +260,7 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
             progressBar = itemView.findViewById(R.id.progressBar);
             a = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.amin_right);
 //            layout_main=itemView.findViewById(R.id.layout_main);
+            mhomeActivity=(HomeActivity)context;
 
         }
 

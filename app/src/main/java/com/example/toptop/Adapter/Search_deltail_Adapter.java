@@ -12,9 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.toptop.HomeActivity;
 import com.example.toptop.Models.Deltail;
 import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.userObject;
+import com.example.toptop.My_interface.Onclick_Item_Video_profile;
 import com.example.toptop.R;
 
 import java.util.ArrayList;
@@ -25,11 +27,12 @@ public class Search_deltail_Adapter extends RecyclerView.Adapter<Search_deltail_
     private Context context;
     private List<Deltail>deltailList;
     List<Deltail> deltailList1;
-
+    private HomeActivity mhomeActivity;
     public Search_deltail_Adapter(Context context) {
         this.context = context;
     }
     public void setdata(List<Deltail> deltailList){
+        mhomeActivity=(HomeActivity)context;
         this.deltailList=deltailList;
         this.deltailList1=deltailList;
     }
@@ -52,7 +55,12 @@ public class Search_deltail_Adapter extends RecyclerView.Adapter<Search_deltail_
         holder.rcv_deltail.setLayoutManager(linearLayoutManager);
 
         Search_Adapter search_adapter=new Search_Adapter();
-        search_adapter.setdata(deltail.getMedia());
+        search_adapter.setdata(deltail.getMedia(), new Onclick_Item_Video_profile() {
+            @Override
+            public void onClickItemVideo(MediaObjectt media) {
+                mhomeActivity.onClickfromsearch_GoToOpenVideo_Fragment(media);
+            }
+        });
         holder.rcv_deltail.setAdapter(search_adapter);
     }
 

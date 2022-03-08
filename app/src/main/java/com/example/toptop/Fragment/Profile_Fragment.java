@@ -19,6 +19,7 @@ import com.example.toptop.Adapter.Video_profile_Adapter;
 import com.example.toptop.Edit_Profile_Activity;
 import com.example.toptop.HomeActivity;
 import com.example.toptop.Models.MediaObjectt;
+import com.example.toptop.Models.follower;
 import com.example.toptop.Models.userObject;
 import com.example.toptop.My_interface.OnLongclick_Item_Video_profile;
 import com.example.toptop.My_interface.Onclick_Item_Video_profile;
@@ -35,6 +36,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Profile_Fragment extends Fragment {
     public static final String TAG1 = Profile_Fragment.class.getName();
@@ -42,7 +44,7 @@ public class Profile_Fragment extends Fragment {
     private RecyclerView recyclerView;
     private Video_profile_Adapter adapter;
     private List<MediaObjectt> mediaObjecttList;
-    TextView tv_phone_users, tv_name_user, tv_email;
+    TextView tv_phone_users, tv_name_user, tv_email,tvsumlike,tvsumfollower,tvsumfolling;
     ImageView avata;
     Button bt_update_profile;
     private userObject user;
@@ -59,6 +61,9 @@ public class Profile_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         tv_phone_users = view.findViewById(R.id.tv_phone_user);
         tv_name_user = view.findViewById(R.id.tv_name_user);
+        tvsumlike=view.findViewById(R.id.tvsumlike);
+        tvsumfollower=view.findViewById(R.id.tvsumfollower);
+        tvsumfolling=view.findViewById(R.id.tvsumfolling);
         tv_email = view.findViewById(R.id.tv_email_user);
         avata = view.findViewById(R.id.circleImageView_avata);
         bt_update_profile = view.findViewById(R.id.buttonEditProfile);
@@ -88,7 +93,7 @@ public class Profile_Fragment extends Fragment {
                         Picasso.get().load(R.drawable.avatar).into(avata);
                     }
 //                    Glide.with(getActivity()).load(img).error(R.drawable.avatar).into(avata);
-
+//
                 }
             }
 
@@ -101,7 +106,7 @@ public class Profile_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().startActivity(new Intent(getActivity(), Edit_Profile_Activity.class));
-                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 
             }
         });
@@ -111,13 +116,13 @@ public class Profile_Fragment extends Fragment {
         adapter = new Video_profile_Adapter(mediaObjecttList, new Onclick_Item_Video_profile() {
             @Override
             public void onClickItemVideo(MediaObjectt media) {
-                mhomeActivity.onClickGoToOpenVideo_Fragment(media);
+                mhomeActivity.onClickItemfromProfile_GoToOpenVideo_Fragment(media);
 
             }
         }, new OnLongclick_Item_Video_profile() {
             @Override
             public void onClickItemVideo(MediaObjectt media) {
-                mhomeActivity.onClickGoToCreate_Fragment(media);
+                mhomeActivity.onClickfromProfile_GoToCreate_Fragment(media);
             }
         },getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
@@ -136,12 +141,23 @@ public class Profile_Fragment extends Fragment {
         qr.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int sum=0;
                 mediaObjecttList.clear();
                 for(DataSnapshot ds:snapshot.getChildren()){
                     MediaObjectt media=ds.getValue(MediaObjectt.class);
                     //add to list
                     mediaObjecttList.add(media);
                     adapter.notifyDataSetChanged();
+                    //
+                    //
+                   Map<String,Object>map=(Map<String, Object>) ds.getValue();
+                   Object plike=map.get("video_heart");
+                   int like=Integer.parseInt(String.valueOf(plike));
+                   sum +=like;
+                   tvsumlike.setText(String.valueOf(sum)+"\n"+"thich");
+
+                   //
+
                 }
             }
 
@@ -150,7 +166,51 @@ public class Profile_Fragment extends Fragment {
 
             }
         });
+        //
 
+        List<follower> followerList=new ArrayList<>();
+        DatabaseReference myRef2 = database.getReference("follows").child(usert.getUid());
+        myRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                followerList.clear();
+                    follower mfollower=snapshot.getValue(follower.class);
+                    if(mfollower!=null) {
+                        followerList.add(mfollower);
+                        tvsumfollower.setText(String.valueOf(followerList.size())+"\n"+"Follower");
+                    }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //
+        DatabaseReference myReff = database.getReference("follows");
+        Query qrf=myReff.orderByChild(usert.getUid()).equalTo("1");
+        qrf.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int sumfollowing=0;
+                for(DataSnapshot ds:snapshot.getChildren()){
+                    Map<String,Object>map1=(Map<String, Object>) ds.getValue();
+                    Object following=map1.get(usert.getUid());
+                    int followingg=Integer.parseInt(String.valueOf(following));
+                    sumfollowing +=followingg;
+                    tvsumfolling.setText(String.valueOf(sumfollowing)+"\n"+"Following");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //
     }
 
 }

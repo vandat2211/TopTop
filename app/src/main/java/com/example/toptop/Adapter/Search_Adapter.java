@@ -10,14 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptop.Models.MediaObjectt;
+import com.example.toptop.My_interface.Onclick_Item_Video_profile;
 import com.example.toptop.R;
 
 import java.util.List;
 
 public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.SearchViewHolder>{
     private List<MediaObjectt> mediaObjecttList;
-    public void setdata(List<MediaObjectt> mediaObjecttList){
+    private Onclick_Item_Video_profile iclick_Item_video;
+    public void setdata(List<MediaObjectt> mediaObjecttList,Onclick_Item_Video_profile iclick_Item_video){
         this.mediaObjecttList=mediaObjecttList;
+        this.iclick_Item_video=iclick_Item_video;
         notifyDataSetChanged();
     }
 
@@ -44,6 +47,12 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.SearchVi
 
         });
         holder.videoView.setOnCompletionListener(mp -> mp.start());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iclick_Item_video.onClickItemVideo(media);
+            }
+        });
     }
 
     @Override

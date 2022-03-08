@@ -50,7 +50,7 @@ private List<MediaObjectt> mediaObjecttList;
         adapter=new videoAdapter(mediaObjecttList, new Onclick_Item_Video_profile() {
             @Override
             public void onClickItemVideo(MediaObjectt media) {
-                mhomeActivity.onClickGoToVideoCustomer_Fragment(media);
+                mhomeActivity.onClickfromHomeVideo_GoToHomeCustomer_Fragment(media);
             }
         }, getContext());
         viewPager2.setAdapter(adapter);

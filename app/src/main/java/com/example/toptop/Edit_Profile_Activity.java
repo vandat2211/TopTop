@@ -268,8 +268,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     }
 
     public void onBack(View view) {
-
-        startActivity(new Intent(Edit_Profile_Activity.this, HomeActivity.class));
+        onBackPressed();
+        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
     }
     public void setMedia(MediaObjectt media) {
         this.media = media;

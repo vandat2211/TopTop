@@ -38,6 +38,7 @@ import java.util.List;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class Search_Fragment extends Fragment {
+    public static final String TAG5 = Search_Fragment.class.getName();
     Toolbar mtoolbar;
     private ViewPager2 mviewPager2;
     private CircleIndicator3 circleIndicator3;
@@ -238,9 +239,105 @@ public class Search_Fragment extends Fragment {
 
             }
         });
+        List<MediaObjectt> mediaObjecttList3 = new ArrayList<>();
+        Query query3 = mydata.orderByChild("hast_task_name").equalTo("#vuive");
+        query2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                MediaObjectt mediaObjectt = snapshot.getValue(MediaObjectt.class);
+                mediaObjecttList2.add(mediaObjectt);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        List<MediaObjectt> mediaObjecttList4 = new ArrayList<>();
+        Query query4 = mydata.orderByChild("hast_task_name").equalTo("#buon");
+        query2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                MediaObjectt mediaObjectt = snapshot.getValue(MediaObjectt.class);
+                mediaObjecttList2.add(mediaObjectt);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        List<MediaObjectt> mediaObjecttList5 = new ArrayList<>();
+        Query query5 = mydata.orderByChild("hast_task_name").equalTo("#cover");
+        query2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                MediaObjectt mediaObjectt = snapshot.getValue(MediaObjectt.class);
+                mediaObjecttList2.add(mediaObjectt);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         deltailList.add(new Deltail("#tet", mediaObjecttList));
         deltailList.add(new Deltail("#nha", mediaObjecttList2));
         deltailList.add(new Deltail("#hoc", mediaObjecttList1));
+        deltailList.add(new Deltail("#vuive", mediaObjecttList3));
+        deltailList.add(new Deltail("#buon", mediaObjecttList4));
+        deltailList.add(new Deltail("#cover", mediaObjecttList5));
         adapter.notifyDataSetChanged();
         return deltailList;
 

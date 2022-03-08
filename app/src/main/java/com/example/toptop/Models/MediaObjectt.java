@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MediaObjectt implements Serializable {
-    private String video_id,video_heart,video_comment;
+    private String video_id,video_heart,video_comment,follower;
     private String video_des,video_uri;
     private String user_id,user_name,profileImage;
     private String sound_id;
@@ -40,7 +40,7 @@ public class MediaObjectt implements Serializable {
     private String timestamp;
 
 
-    public MediaObjectt(String video_id, String video_heart, String video_comment, String video_des, String video_uri, String user_id, String user_name, String profileImage, String sound_id, String sound_name, String user_phone, String hast_task_id, String hast_task_name, String timestamp) {
+    public MediaObjectt(String video_id, String video_heart, String video_comment, String video_des, String video_uri, String user_id, String user_name, String profileImage, String sound_id, String sound_name, String user_phone, String hast_task_id, String hast_task_name, String timestamp,String follower) {
         this.video_id = video_id;
         this.video_heart = video_heart;
         this.video_comment = video_comment;
@@ -55,6 +55,7 @@ public class MediaObjectt implements Serializable {
         this.hast_task_id = hast_task_id;
         this.hast_task_name = hast_task_name;
         this.timestamp = timestamp;
+        this.follower=follower;
     }
 
     public MediaObjectt() {
@@ -149,6 +150,11 @@ public class MediaObjectt implements Serializable {
         this.sound_name = sound_name;
     }
 
+    public String getFollower() {
+        return follower;
+    }
 
-
+    public void setFollower(String follower) {
+        this.follower = follower;
+    }
 }

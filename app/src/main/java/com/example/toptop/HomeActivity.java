@@ -13,15 +13,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.toptop.Fragment.Create_Fragment;
 import com.example.toptop.Fragment.Home_Fragment;
 import com.example.toptop.Fragment.Home_customer_Fragment;
@@ -31,16 +36,22 @@ import com.example.toptop.Fragment.Open_Video_Fragment;
 import com.example.toptop.Fragment.Profile_Fragment;
 import com.example.toptop.Fragment.Search_Fragment;
 import com.example.toptop.Models.MediaObjectt;
+import com.example.toptop.Models.userObject;
 import com.example.toptop.Register.RegisterUser;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -53,10 +64,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //
+        //
         bottomNavigationView = findViewById(R.id.bottom_nav);
         layoutBottom_sheet = findViewById(R.id.bottom_sheet_layout);
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottom_sheet);
 
+        //
         //
         init();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, new Home_Fragment()).commit();
@@ -132,51 +145,65 @@ public class HomeActivity extends AppCompatActivity {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    public void onClickGoToOpenVideo_Fragment(MediaObjectt media){
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        Open_Video_Fragment open_video_fragment=new Open_Video_Fragment();
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("MediaObjectt",media);
+    public void onClickItemfromProfile_GoToOpenVideo_Fragment(MediaObjectt media) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Open_Video_Fragment open_video_fragment = new Open_Video_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("MediaObjectt", media);
         open_video_fragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.frame,open_video_fragment);
+        fragmentTransaction.replace(R.id.frame, open_video_fragment);
         fragmentTransaction.addToBackStack(Profile_Fragment.TAG1);
         fragmentTransaction.commit();
     }
 
-    public void onClickGoToVideoHome_Fragment(MediaObjectt media){
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        Open_Video_Fragment open_video_fragment=new Open_Video_Fragment();
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("MediaObjectt1",media);
+    public void onClickItemfromCustomer_GoToOpenVideo_Fragment(MediaObjectt media) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Open_Video_Fragment open_video_fragment = new Open_Video_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("MediaObjectt1", media);
         open_video_fragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.frame,open_video_fragment);
+        fragmentTransaction.replace(R.id.frame, open_video_fragment);
         fragmentTransaction.addToBackStack(Home_customer_Fragment.TAG);
         fragmentTransaction.commit();
     }
-    public void onClickGoToVideoCustomer_Fragment(MediaObjectt media){
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        Home_customer_Fragment home_customer_fragment=new Home_customer_Fragment();
-        Bundle bundle1=new Bundle();
-        bundle1.putSerializable("MediaObjectt2",media);
+
+    public void onClickfromHomeVideo_GoToHomeCustomer_Fragment(MediaObjectt media) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Home_customer_Fragment home_customer_fragment = new Home_customer_Fragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putSerializable("MediaObjectt2", media);
         home_customer_fragment.setArguments(bundle1);
-        fragmentTransaction.replace(R.id.frame,home_customer_fragment);
+        fragmentTransaction.replace(R.id.frame, home_customer_fragment);
         fragmentTransaction.addToBackStack(Home_video_Fragment.TAG2);
         fragmentTransaction.commit();
 
     }
-    public void onClickGoToCreate_Fragment(MediaObjectt media){
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        Create_Fragment create_fragment=new Create_Fragment();
-        Bundle bundle3=new Bundle();
-        bundle3.putSerializable("MediaObjectt3",media);
+
+    public void onClickfromProfile_GoToCreate_Fragment(MediaObjectt media) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Create_Fragment create_fragment = new Create_Fragment();
+        Bundle bundle3 = new Bundle();
+        bundle3.putSerializable("MediaObjectt3", media);
         create_fragment.setArguments(bundle3);
-        fragmentTransaction.replace(R.id.frame,create_fragment);
+        fragmentTransaction.replace(R.id.frame, create_fragment);
         fragmentTransaction.commit();
 
     }
 
+    public void onClickfromsearch_GoToOpenVideo_Fragment(MediaObjectt media) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Open_Video_Fragment open_video_fragment = new Open_Video_Fragment();
+        Bundle bundle4 = new Bundle();
+        bundle4.putSerializable("MediaObjectt4", media);
+        open_video_fragment.setArguments(bundle4);
+        fragmentTransaction.replace(R.id.frame, open_video_fragment);
+        fragmentTransaction.addToBackStack(Search_Fragment.TAG5);
+        fragmentTransaction.commit();
+
+    }
     public void customer(View view) {
         view.startAnimation(AnimationUtils.loadAnimation(this, androidx.appcompat.R.anim.abc_fade_in));
     }
+
 
 }

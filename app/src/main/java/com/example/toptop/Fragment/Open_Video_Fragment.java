@@ -44,10 +44,11 @@ public class Open_Video_Fragment extends Fragment {
         mediaObjecttList=new ArrayList<>();
         getdata();
         getdata2();
+        getdata3();
         adapter=new videoAdapter(mediaObjecttList, new Onclick_Item_Video_profile() {
             @Override
             public void onClickItemVideo(MediaObjectt media) {
-                mhomeActivity.onClickGoToVideoCustomer_Fragment(media);
+                mhomeActivity.onClickfromHomeVideo_GoToHomeCustomer_Fragment(media);
             }
         }, getContext());
         viewPager2.setAdapter(adapter);
@@ -64,7 +65,7 @@ public class Open_Video_Fragment extends Fragment {
     private void getdata(){
         Bundle bundle=getArguments();
         if(bundle!=null){
-            MediaObjectt media=(MediaObjectt)bundle.get("MediaObjectt");
+            MediaObjectt media=(MediaObjectt)bundle.get("MediaObjectt4");
             if (media !=null){
                 String key=String.valueOf(media.getVideo_id());
                 FirebaseDatabase database=FirebaseDatabase.getInstance();
@@ -113,5 +114,32 @@ public class Open_Video_Fragment extends Fragment {
             }
         }
     }
+    private void getdata3(){
+        Bundle bundle=getArguments();
+        if(bundle!=null){
+            MediaObjectt media=(MediaObjectt)bundle.get("MediaObjectt");
+            if (media !=null){
+                String key=String.valueOf(media.getVideo_id());
+                FirebaseDatabase database=FirebaseDatabase.getInstance();
+                DatabaseReference myRef=database.getReference("videos").child(key);
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mediaObjecttList.clear();
+                        MediaObjectt media=snapshot.getValue(MediaObjectt.class);
+                        mediaObjecttList.add(media);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        }
+    }
+
 
 }
