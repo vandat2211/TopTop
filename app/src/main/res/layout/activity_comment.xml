@@ -16,12 +16,13 @@
         android:onClick="Cancle_comment"
         android:src="@drawable/ic_baseline_close_24"
         tools:ignore="OnClick" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_comments"
-        android:layout_below="@+id/bt_cancle_comment"
-        android:layout_above="@+id/chatcommentlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/chatcommentlayout"
+        android:layout_below="@+id/bt_cancle_comment" />
     <LinearLayout
         android:id="@+id/chatcommentlayout"
         android:layout_width="match_parent"
@@ -32,10 +33,11 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:background="#E1EBEF"
             android:id="@+id/img_user_comment"
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_gravity="center"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:scaleType="centerCrop"
             android:src="@drawable/avatar"
             app:civ_circle_background_color="@color/white" />

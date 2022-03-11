@@ -4,8 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.toptop.Fragment.Home_Video_following_Fragment;
-import com.example.toptop.Fragment.Home_customer_Fragment;
+import com.example.toptop.Fragment.Home_Video_Liked_Fragment;
 import com.example.toptop.Fragment.Home_video_Fragment;
 import com.example.toptop.Fragment.Home_Fragment;
 
@@ -23,7 +22,7 @@ public class TablayoutAdapter extends FragmentStateAdapter{
             case 0:
                 return new Home_video_Fragment() ;
             case 1:
-                return new Home_Video_following_Fragment();
+                return new Home_Video_Liked_Fragment();
             default:
                 return new Home_video_Fragment() ;
         }

@@ -2,6 +2,8 @@ package com.example.toptop;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.toptop.Adapter.Comment_Adapter;
+import com.example.toptop.Models.Comment;
 import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.userObject;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,13 +30,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class CommentActivity extends AppCompatActivity {
     private EditText ed_comment;
     private ImageButton bt_send_comment;
     ImageView img_user_comment;
     FirebaseUser usert = FirebaseAuth.getInstance().getCurrentUser();
+    String username,img_user;
+    RecyclerView rcvComment;
+    Comment_Adapter cmadapter;
+    List<Comment> commentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +51,9 @@ public class CommentActivity extends AppCompatActivity {
         ed_comment=findViewById(R.id.ed_messenger);
         bt_send_comment=findViewById(R.id.bt_send_comment);
         img_user_comment = findViewById(R.id.img_user_comment);
+        rcvComment=findViewById(R.id.rcv_comments);
         comments();
+        LoadComments();
         bt_send_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,12 +61,11 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
     }
+
     boolean mProcessComment = false;
     public void getdatafromcomment(){
         Intent intent=getIntent();
         String videoid=intent.getStringExtra("oj");
-        String userid=intent.getStringExtra("ojj");
-        String username=intent.getStringExtra("ojjj");
         String comment = ed_comment.getText().toString().trim();
                 if (TextUtils.isEmpty(comment)) {
                     Toast.makeText(CommentActivity.this, "comment is empty....", Toast.LENGTH_SHORT).show();
@@ -64,8 +76,12 @@ public class CommentActivity extends AppCompatActivity {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("cID", timeStamp);
                 hashMap.put("comment", comment);
-                hashMap.put("user_id",userid);
+                hashMap.put("user_id",usert.getUid());
                 hashMap.put("user_name", username);
+                hashMap.put("time_comment",timeStamp);
+                hashMap.put("image_user",img_user);
+                hashMap.put("heart_comment","0");
+                hashMap.put("video_id",videoid);
                 //
                 dt.child(timeStamp).setValue(hashMap)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -115,6 +131,8 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userObject user = snapshot.getValue(userObject.class);
+                username=user.getUser_name();
+                img_user=user.getProfileImage();
                 try {
                     Picasso.get().load(user.getProfileImage()).into(img_user_comment);
                 }catch (Exception e){
@@ -135,6 +153,32 @@ public class CommentActivity extends AppCompatActivity {
     public void Cancle_comment(View view) {
     onBackPressed();
     overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    }
+    private void LoadComments(){
+        Intent intent=getIntent();
+        String videoid=intent.getStringExtra("oj");
+        String myuId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+        rcvComment.setLayoutManager(linearLayoutManager);
+        commentList=new ArrayList<>();
+        DatabaseReference rdata=FirebaseDatabase.getInstance().getReference("videos").child(videoid).child("comments");
+        rdata.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                commentList.clear();
+                for (DataSnapshot ds:snapshot.getChildren()){
+                    Comment comment=ds.getValue(Comment.class);
+                    commentList.add(comment);
+                    cmadapter=new Comment_Adapter(getApplicationContext(),commentList,myuId,videoid);
+                    rcvComment.setAdapter(cmadapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
 

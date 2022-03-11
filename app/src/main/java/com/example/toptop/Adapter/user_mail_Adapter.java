@@ -1,5 +1,6 @@
 package com.example.toptop.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,30 +10,30 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.toptop.ChatActivity;
-import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.userObject;
+import com.example.toptop.My_interface.Onclick_user_mail;
 import com.example.toptop.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class user_mail_Adapter extends RecyclerView.Adapter<user_mail_Adapter.MyHolder> implements Filterable {
 Context context;
 List<userObject> userObjectList;
 List<userObject> userObjectList1;
+private Onclick_user_mail onclick_user_mail;
 
-    public user_mail_Adapter(Context context, List<userObject> userObjectList) {
+    public user_mail_Adapter(Context context, List<userObject> userObjectList,Onclick_user_mail onclick_user_mail) {
         this.context = context;
         this.userObjectList = userObjectList;
         this.userObjectList1=userObjectList;
+        this.onclick_user_mail=onclick_user_mail;
     }
 
     @NonNull
@@ -50,13 +51,23 @@ List<userObject> userObjectList1;
         }
         holder.name_user_mail.setText(user.getUser_name());
         holder.email_user_mail.setText(user.getEmail());
-        Glide.with(context).load(user.getProfileImage()).into(holder.img_user_mail);
+        Glide.with(context).load(user.getProfileImage()).error(R.drawable.avatar).into(holder.img_user_mail);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Activity activity = (Activity) context;
                 Intent intent=new Intent(context, ChatActivity.class);
                 intent.putExtra("hisUid",user.getUser_id());
                 context.startActivities(new Intent[]{intent});
+                activity.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+            }
+        });
+        holder.img_user_mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onclick_user_mail.onClickItemUser(user);
+                Activity activity = (Activity) context;
+                activity.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
             }
         });
     }

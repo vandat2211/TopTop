@@ -12,20 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.toptop.Adapter.Video_customer_Adapter;
-import com.example.toptop.Adapter.Video_profile_Adapter;
 import com.example.toptop.HomeActivity;
 import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.follower;
 import com.example.toptop.Models.userObject;
 import com.example.toptop.My_interface.Onclick_Item_Video_profile;
 import com.example.toptop.R;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,8 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Home_customer_Fragment extends Fragment {
-    public static final String TAG = Home_customer_Fragment.class.getName();
+public class Home_customer_Fragment2 extends Fragment {
+    public static final String TAG = Home_customer_Fragment2.class.getName();
     TextView tv_phone_customer, tv_name_customer,heart_customer,follwer_customer,follwing_customer;
     ImageView avata_customer,imageViewback;
     Button bt_follow;
@@ -63,7 +60,7 @@ public class Home_customer_Fragment extends Fragment {
 
         recyclerView1 = view.findViewById(R.id.recyclerVideo_customer);
         mediaObjecttList = new ArrayList<>();
-        getdatafromHomeVideoToCustomer();
+        getdatafromHomeVideoToCustomer2();
         adapter = new Video_customer_Adapter(mediaObjecttList, new Onclick_Item_Video_profile() {
             @Override
             public void onClickItemVideo(MediaObjectt media) {
@@ -83,11 +80,11 @@ public class Home_customer_Fragment extends Fragment {
         });
         return view;
     }
-    private void getdatafromHomeVideoToCustomer() {
+    private void getdatafromHomeVideoToCustomer2() {
 
         Bundle bundle1 = getArguments();
         if (bundle1 != null) {
-            MediaObjectt media2 = (MediaObjectt) bundle1.get("MediaObjectt2");
+            userObject media2 = (userObject) bundle1.get("MediaObjectt6");
             if (media2 != null) {
                 tv_name_customer.setText(media2.getUser_name());
                 Glide.with(getActivity()).load(media2.getProfileImage()).error(R.drawable.avatar).into(avata_customer);

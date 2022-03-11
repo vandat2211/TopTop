@@ -45,6 +45,7 @@ public class Open_Video_Fragment extends Fragment {
         getdata();
         getdata2();
         getdata3();
+        getdata4();
         adapter=new videoAdapter(mediaObjecttList, new Onclick_Item_Video_profile() {
             @Override
             public void onClickItemVideo(MediaObjectt media) {
@@ -118,6 +119,32 @@ public class Open_Video_Fragment extends Fragment {
         Bundle bundle=getArguments();
         if(bundle!=null){
             MediaObjectt media=(MediaObjectt)bundle.get("MediaObjectt");
+            if (media !=null){
+                String key=String.valueOf(media.getVideo_id());
+                FirebaseDatabase database=FirebaseDatabase.getInstance();
+                DatabaseReference myRef=database.getReference("videos").child(key);
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mediaObjecttList.clear();
+                        MediaObjectt media=snapshot.getValue(MediaObjectt.class);
+                        mediaObjecttList.add(media);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        }
+    }
+    private void getdata4(){
+        Bundle bundle=getArguments();
+        if(bundle!=null){
+            MediaObjectt media=(MediaObjectt)bundle.get("MediaObjectt5");
             if (media !=null){
                 String key=String.valueOf(media.getVideo_id());
                 FirebaseDatabase database=FirebaseDatabase.getInstance();

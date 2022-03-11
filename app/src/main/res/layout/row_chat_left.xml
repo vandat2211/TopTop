@@ -18,12 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        >
+
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgnameuser"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imgnameuser"
-            app:civ_border_color="@null"
             android:src="@drawable/avatar"
+            app:civ_border_color="@null"
             tools:ignore="MissingClass" />
 
         <TextView

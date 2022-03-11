@@ -1,6 +1,8 @@
 package com.example.toptop.Models;
 
-public class userObject {
+import java.io.Serializable;
+
+public class userObject implements Serializable {
     private String following,follower,sum_heart;
     private String user_id;
 

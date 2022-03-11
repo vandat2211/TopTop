@@ -12,6 +12,13 @@
         android:layout_height="?actionBarSize"
         android:background="#03A9F4">
 
+        <ImageView
+            android:onClick="back_fragment_mail"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_backward"
+            tools:ignore="OnClick" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_user_chat"
             android:layout_width="35dp"

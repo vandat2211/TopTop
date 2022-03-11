@@ -67,7 +67,7 @@ public class Chat_Adapter extends RecyclerView.Adapter<Chat_Adapter.MyHolder> {
     public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") int position) {
         String mes = chatList.get(position).getMessage();
         String timestamp = chatList.get(position).getTimestamp();
-
+        // convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(timestamp));
         String datetime = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString();

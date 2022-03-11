@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -18,8 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptop.Adapter.user_mail_Adapter;
+import com.example.toptop.HomeActivity;
 import com.example.toptop.MainActivity;
 import com.example.toptop.Models.userObject;
+import com.example.toptop.My_interface.Onclick_user_mail;
 import com.example.toptop.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,10 +33,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mail_Fragment extends Fragment {
+    public static final String TAG6 = Mail_Fragment.class.getName();
     Toolbar toolbar;
     private TextView tv_tool_bar;
     SearchView searchView;
     RecyclerView re;
+    private HomeActivity mhomeActivity;
     user_mail_Adapter adapter;
     List<userObject> userObjectList;
     @Nullable
@@ -45,15 +47,20 @@ public class Mail_Fragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_mail,container,false);
         re=view.findViewById(R.id.recyclerView_mail);
         toolbar=view.findViewById(R.id.toolbar_chat);
+        mhomeActivity=(HomeActivity)getActivity();
         tv_tool_bar = view.findViewById(R.id.tv_tool_bar);
         searchView=view.findViewById(R.id.searchview);
         re.setHasFixedSize(true);
         re.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         userObjectList=new ArrayList<>();
+        adapter=new user_mail_Adapter(getActivity(), userObjectList, new Onclick_user_mail() {
+            @Override
+            public void onClickItemUser(userObject user) {
+                mhomeActivity.onClickfromHomeVide_GoToHomeCustomer_Fragment(user);
+            }
+        });
          getAllUsers();
-        adapter=new user_mail_Adapter(getActivity(),userObjectList);
-        re.setAdapter(adapter);
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +103,12 @@ public class Mail_Fragment extends Fragment {
                     if(!user.getUser_id().equals(fuser.getUid())){
                         userObjectList.add(user);
                     }
-                    adapter=new user_mail_Adapter(getActivity(),userObjectList);
+                    adapter=new user_mail_Adapter(getActivity(), userObjectList, new Onclick_user_mail() {
+                        @Override
+                        public void onClickItemUser(userObject user) {
+                            mhomeActivity.onClickfromHomeVide_GoToHomeCustomer_Fragment(user);
+                        }
+                    });
                     re.setAdapter(adapter);
                 }
             }

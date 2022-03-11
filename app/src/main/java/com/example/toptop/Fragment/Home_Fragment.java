@@ -34,7 +34,7 @@ public class Home_Fragment extends Fragment {
                     tab.setText("For you");
                     break;
                 case 1:
-                    tab.setText("Follwing");
+                    tab.setText("Liked video");
                     break;
 
             }

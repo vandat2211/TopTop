@@ -240,7 +240,7 @@ public class Search_Fragment extends Fragment {
             }
         });
         List<MediaObjectt> mediaObjecttList3 = new ArrayList<>();
-        Query query3 = mydata.orderByChild("hast_task_name").equalTo("#vuive");
+        Query query3 = mydata.orderByChild("hast_task_name").equalTo("#vui ve");
         query2.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -335,7 +335,7 @@ public class Search_Fragment extends Fragment {
         deltailList.add(new Deltail("#tet", mediaObjecttList));
         deltailList.add(new Deltail("#nha", mediaObjecttList2));
         deltailList.add(new Deltail("#hoc", mediaObjecttList1));
-        deltailList.add(new Deltail("#vuive", mediaObjecttList3));
+        deltailList.add(new Deltail("#vui ve", mediaObjecttList3));
         deltailList.add(new Deltail("#buon", mediaObjecttList4));
         deltailList.add(new Deltail("#cover", mediaObjecttList5));
         adapter.notifyDataSetChanged();

@@ -1,10 +1,7 @@
 package com.example.toptop;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -13,23 +10,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.toptop.Fragment.Create_Fragment;
 import com.example.toptop.Fragment.Home_Fragment;
 import com.example.toptop.Fragment.Home_customer_Fragment;
+import com.example.toptop.Fragment.Home_customer_Fragment2;
 import com.example.toptop.Fragment.Home_video_Fragment;
 import com.example.toptop.Fragment.Mail_Fragment;
 import com.example.toptop.Fragment.Open_Video_Fragment;
@@ -38,20 +29,10 @@ import com.example.toptop.Fragment.Search_Fragment;
 import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.userObject;
 import com.example.toptop.Register.RegisterUser;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -198,6 +179,17 @@ public class HomeActivity extends AppCompatActivity {
         open_video_fragment.setArguments(bundle4);
         fragmentTransaction.replace(R.id.frame, open_video_fragment);
         fragmentTransaction.addToBackStack(Search_Fragment.TAG5);
+        fragmentTransaction.commit();
+
+    }
+    public void onClickfromHomeVide_GoToHomeCustomer_Fragment(userObject user) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Home_customer_Fragment2 home_customer_fragment = new Home_customer_Fragment2();
+        Bundle bundle1 = new Bundle();
+        bundle1.putSerializable("MediaObjectt6", user);
+        home_customer_fragment.setArguments(bundle1);
+        fragmentTransaction.replace(R.id.frame, home_customer_fragment);
+        fragmentTransaction.addToBackStack(Mail_Fragment.TAG6);
         fragmentTransaction.commit();
 
     }

@@ -8,10 +8,8 @@ public class follower {
     public follower(String a) {
         this.a = a;
     }
-
     public follower() {
     }
-
     public String getA() {
         return a;
     }

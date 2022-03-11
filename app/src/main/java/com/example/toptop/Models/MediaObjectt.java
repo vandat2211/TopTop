@@ -11,7 +11,19 @@ public class MediaObjectt implements Serializable {
     private String user_id,user_name,profileImage;
     private String sound_id;
     private String sound_name;
-    private String user_phone,hast_task_id,hast_task_name;
+    private String user_phone;
+    private String hast_task_id;
+    private String hast_task_name;
+
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
+    }
+
+    private String like;
 
     public String getHast_task_id() {
         return hast_task_id;
@@ -40,7 +52,7 @@ public class MediaObjectt implements Serializable {
     private String timestamp;
 
 
-    public MediaObjectt(String video_id, String video_heart, String video_comment, String video_des, String video_uri, String user_id, String user_name, String profileImage, String sound_id, String sound_name, String user_phone, String hast_task_id, String hast_task_name, String timestamp,String follower) {
+    public MediaObjectt(String video_id, String video_heart, String video_comment, String video_des, String video_uri, String user_id, String user_name, String profileImage, String sound_id, String sound_name, String user_phone, String hast_task_id, String hast_task_name, String timestamp,String follower,String like) {
         this.video_id = video_id;
         this.video_heart = video_heart;
         this.video_comment = video_comment;
@@ -56,6 +68,7 @@ public class MediaObjectt implements Serializable {
         this.hast_task_name = hast_task_name;
         this.timestamp = timestamp;
         this.follower=follower;
+        this.like=like;
     }
 
     public MediaObjectt() {
