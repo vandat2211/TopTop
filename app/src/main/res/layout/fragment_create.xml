@@ -17,33 +17,23 @@
         android:inputType="textPersonName|textCapSentences"
         android:padding="10dp"
         android:textColor="@color/black" />
+
     <Spinner
         android:id="@+id/spinner1"
-        android:layout_below="@id/ed_des_video"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pickVideoFab"
+        android:layout_alignTop="@id/pickVideoFab"
+        android:background="@drawable/duongvien_goctron"
         android:padding="10dp"
-        android:background="#DCEAF1"
 
         />
-
-<!--    <EditText-->
-<!--        android:id="@+id/ed_hast_task"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/ed_des_video"-->
-<!--        android:background="#DCEAF1"-->
-<!--        android:hint="Enter hast task"-->
-<!--        android:inputType="textPersonName|textCapSentences"-->
-<!--        android:padding="10dp"-->
-<!--        android:textColor="@color/black" />-->
-
     <VideoView
         android:id="@+id/video_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bt_uploadvideo"
-        android:layout_below="@id/spinner1"
+        android:layout_below="@id/ed_des_video"
         android:layout_marginTop="5dp" />
 
     <Button
@@ -71,11 +61,10 @@
         android:id="@+id/pickVideoFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_video_library_24"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:backgroundTint="@color/teal_200"
-       />
+        android:src="@drawable/ic_baseline_video_library_24" />
 
 
 

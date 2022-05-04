@@ -67,12 +67,23 @@ public class Chat_Adapter extends RecyclerView.Adapter<Chat_Adapter.MyHolder> {
     public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") int position) {
         String mes = chatList.get(position).getMessage();
         String timestamp = chatList.get(position).getTimestamp();
+        String type = chatList.get(position).getType();
         // convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(timestamp));
         String datetime = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString();
+        //
+        if(type.equals("text")){
+             holder.tv_message.setVisibility(View.VISIBLE);
+             holder.mes_img.setVisibility(View.GONE);
+            holder.tv_message.setText(mes);
+        }
+else{
+            holder.tv_message.setVisibility(View.GONE);
+            holder.mes_img.setVisibility(View.VISIBLE);
+            Picasso.get().load(mes).placeholder(R.drawable.ic_baseline_image_24).into(holder.mes_img);
+        }
 
-        holder.tv_message.setText(mes);
         holder.tv_time.setText(datetime);
         try {
             Picasso.get().load(imageUrl).into(holder.img);
@@ -81,9 +92,9 @@ public class Chat_Adapter extends RecyclerView.Adapter<Chat_Adapter.MyHolder> {
         }
 
         //click to show delete dialog
-        holder.messagelayout.setOnClickListener(new View.OnClickListener() {
+        holder.messagelayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 v.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Delete");
@@ -104,6 +115,7 @@ public class Chat_Adapter extends RecyclerView.Adapter<Chat_Adapter.MyHolder> {
                 });
                 //
                 builder.create().show();
+                return false;
             }
         });
 
@@ -169,13 +181,14 @@ public class Chat_Adapter extends RecyclerView.Adapter<Chat_Adapter.MyHolder> {
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
-        ImageView img;
+        ImageView img,mes_img;
         TextView tv_message, tv_time, tv_isSeen;
         LinearLayout messagelayout;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.imgnameuser);
+            mes_img=itemView.findViewById(R.id.mes_img);
             tv_message = itemView.findViewById(R.id.tv_mess);
             tv_time = itemView.findViewById(R.id.tv_time);
             tv_isSeen = itemView.findViewById(R.id.tv_isseent);

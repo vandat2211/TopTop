@@ -19,6 +19,15 @@
             android:text="22/01/2022 05:59 PM"
             android:textColor="@color/black"/>
 
+        <ImageView
+            android:id="@+id/mes_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_toRightOf="@id/imgnameuser"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_image_24" />
+
         <TextView
             android:id="@+id/tv_mess"
             android:layout_width="wrap_content"

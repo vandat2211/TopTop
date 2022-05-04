@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,12 +34,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     LinearLayout layoutBottom_sheet;
     private BottomSheetBehavior bottomSheetBehavior;
     MediaObjectt media;
+    String mUID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +89,8 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        checkUserStatus();
+        FirebaseMessaging.getInstance().subscribeToTopic(mUID);
     }
 
     private void init() {
@@ -156,6 +166,7 @@ public class HomeActivity extends AppCompatActivity {
         home_customer_fragment.setArguments(bundle1);
         fragmentTransaction.replace(R.id.frame, home_customer_fragment);
         fragmentTransaction.addToBackStack(Home_video_Fragment.TAG2);
+        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         fragmentTransaction.commit();
 
     }
@@ -197,5 +208,35 @@ public class HomeActivity extends AppCompatActivity {
         view.startAnimation(AnimationUtils.loadAnimation(this, androidx.appcompat.R.anim.abc_fade_in));
     }
 
+    private void checkUserStatus(){
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null){
+            mUID=user.getUid();
+            SharedPreferences sp=getSharedPreferences("SP_USER",MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.putString("Current_USERID",mUID);
+            editor.apply();
+        }else{
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    protected void onStart() {
+        checkUserStatus();
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        checkUserStatus();
+        super.onResume();
+    }
 }

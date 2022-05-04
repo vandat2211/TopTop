@@ -136,10 +136,14 @@ public class Search_Fragment extends Fragment {
 
     private List<Photo> getlistPhoto() {
         List<Photo> photoList = new ArrayList<>();
-        photoList.add(new Photo(R.drawable.photo3));
-        photoList.add(new Photo(R.drawable.photo2));
-        photoList.add(new Photo(R.drawable.photo1));
-        photoList.add(new Photo(R.drawable.photo4));
+        photoList.add(new Photo(R.drawable.he1));
+        photoList.add(new Photo(R.drawable.he2));
+        photoList.add(new Photo(R.drawable.he3));
+        photoList.add(new Photo(R.drawable.he4));
+        photoList.add(new Photo(R.drawable.he5));
+        photoList.add(new Photo(R.drawable.he6));
+        photoList.add(new Photo(R.drawable.he7));
+
         return photoList;
     }
 

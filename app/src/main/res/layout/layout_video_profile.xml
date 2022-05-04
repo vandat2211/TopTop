@@ -9,8 +9,8 @@
 
     <VideoView
         android:id="@+id/videoview1"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,17 +21,17 @@
         android:id="@+id/img_heartt"
         android:layout_width="20dp"
         android:layout_height="30dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/videoview1"
-        app:layout_constraintStart_toStartOf="@+id/videoview1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/button_bg" />
 
     <TextView
+        app:layout_constraintStart_toStartOf="@id/img_heartt"
         android:id="@+id/tv_soluotthich"
+        android:layout_marginStart="2dp"
         android:layout_width="50dp"
-        android:layout_height="21dp"
+        android:layout_height="30dp"
         android:gravity="center"
         android:text="35.1k"
         android:textColor="@color/white"
