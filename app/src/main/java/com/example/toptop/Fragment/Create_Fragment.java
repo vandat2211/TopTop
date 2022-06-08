@@ -243,9 +243,7 @@ public class Create_Fragment extends Fragment {
                             hashMap.put("video_des", "" + des);
                             hashMap.put("video_id", "" + timestamp);
                             hashMap.put("timestamp", "" + timestamp);
-                            hashMap.put("sound_id", "");
                             hashMap.put("hast_task_name", "" + hast_task);
-                            hashMap.put("sound_name", "");
                             hashMap.put("video_heart", "" + 0);
                             hashMap.put("video_comment", "" + 0);
                             hashMap.put("video_uri", "" + dowloadUri);

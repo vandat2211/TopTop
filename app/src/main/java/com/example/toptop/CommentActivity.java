@@ -27,10 +27,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +55,7 @@ public class CommentActivity extends AppCompatActivity {
         img_user_comment = findViewById(R.id.img_user_comment);
         rcvComment = findViewById(R.id.rcv_comments);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         rcvComment.setLayoutManager(linearLayoutManager);
         rcvComment.setHasFixedSize(true);
@@ -176,9 +179,11 @@ public class CommentActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Comment comment = ds.getValue(Comment.class);
                     commentList.add(comment);
-                    cmadapter = new Comment_Adapter(getApplicationContext(), commentList, myuId, videoid);
-                    rcvComment.setAdapter(cmadapter);
+
                 }
+                Collections.reverse(commentList);
+                cmadapter = new Comment_Adapter(getApplicationContext(), commentList, myuId, videoid);
+                rcvComment.setAdapter(cmadapter);
             }
 
             @Override

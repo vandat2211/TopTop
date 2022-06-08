@@ -95,10 +95,8 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
         holder.des.setText(media.getVideo_des());
         holder.hasttask.setText(media.getHast_task_name());
         holder.comeen.setText(media.getVideo_comment());
-        holder.amthanh.setText(media.getSound_name());
         Glide.with(context).load(media.getProfileImage()).into(holder.img);
         Glide.with(context).load(media.getProfileImage()).into(holder.img2);
-        holder.amthanh.startAnimation(holder.a);
         //
         //
         holder.img.setOnClickListener(new View.OnClickListener() {
@@ -305,7 +303,7 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
     public class videoViewHolder extends RecyclerView.ViewHolder {
         //        private ConstraintLayout layout_main;
         Animation a;
-        MediaPlayer mediaPlayer;
+        MediaPlayer mp;
         private CircleImageView circleImageView;
         VideoView videoView;
         ImageView img, img2, img_heart, img_follow, img_comments, img_share,img_dowload;
@@ -330,9 +328,7 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
             img = itemView.findViewById(R.id.user);
             img2 = itemView.findViewById(R.id.img_amthanh);
             comeen = itemView.findViewById(R.id.tv_commen);
-            amthanh = itemView.findViewById(R.id.tv_amthanh);
             progressBar = itemView.findViewById(R.id.progressBar);
-            a = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.amin_right);
 //            layout_main=itemView.findViewById(R.id.layout_main);
             mhomeActivity = (HomeActivity) context;
 
@@ -359,9 +355,9 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
             videoView.setMediaController(controller);
             controller.setAnchorView(videoView);
 
+
 //        holder.controller.setPadding(0,0,0,1000);
         }
-
     }
 
 

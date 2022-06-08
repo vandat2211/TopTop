@@ -63,7 +63,6 @@ private List<MediaObjectt> mediaObjecttList;
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                 MediaObjectt mediaObjectt=snapshot.getValue(MediaObjectt.class);
                 if(mediaObjectt!=null){
                     if(!mediaObjectt.getUser_id().equals(fuser.getUid())){

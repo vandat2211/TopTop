@@ -115,52 +115,37 @@
         app:srcCompat="@drawable/ic_baseline_add_circle_24" />
 
     <TextView
-        android:id="@+id/tv_amthanh"
-        android:layout_width="143dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="10dp"
-        android:drawableLeft="@drawable/ic_baseline_music_note_24"
-        android:drawablePadding="4dp"
-        android:drawableTint="@color/white"
-
-        android:text="Sau tat ca"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/re"
-        app:layout_constraintEnd_toStartOf="@+id/re"
-        app:layout_constraintHorizontal_bias="0.032"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
         android:id="@+id/tv_mota"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/tv_amthanh"
+        app:layout_constraintBottom_toTopOf="@+id/tv_hast_taskk"
         app:layout_constraintEnd_toStartOf="@+id/re"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tv_amthanh" />
+        app:layout_constraintStart_toStartOf="@+id/tv_hast_taskk" />
 
     <TextView
         android:id="@+id/tv_hast_taskk"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="12dp"
         android:text="#tet2022"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/tv_amthanh"
+        app:layout_constraintBottom_toBottomOf="@+id/re"
         app:layout_constraintEnd_toStartOf="@+id/re"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tv_amthanh" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_users"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:text=" @VanDat"
         android:textColor="@color/white"
         android:textSize="16sp"
