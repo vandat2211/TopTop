@@ -23,6 +23,7 @@ import com.example.toptop.Fragment.Home_Fragment;
 import com.example.toptop.Fragment.Home_customer_Fragment;
 import com.example.toptop.Fragment.Home_customer_Fragment2;
 import com.example.toptop.Fragment.Home_video_Fragment;
+import com.example.toptop.Fragment.Alluser_Fragment;
 import com.example.toptop.Fragment.Mail_Fragment;
 import com.example.toptop.Fragment.Open_Video_Fragment;
 import com.example.toptop.Fragment.Profile_Fragment;
@@ -35,12 +36,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
-import com.google.firebase.installations.FirebaseInstallations;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -200,7 +196,7 @@ public class HomeActivity extends AppCompatActivity {
         bundle1.putSerializable("MediaObjectt6", user);
         home_customer_fragment.setArguments(bundle1);
         fragmentTransaction.replace(R.id.frame, home_customer_fragment);
-        fragmentTransaction.addToBackStack(Mail_Fragment.TAG6);
+        fragmentTransaction.addToBackStack(Alluser_Fragment.TAG6);
         fragmentTransaction.commit();
 
     }
@@ -238,5 +234,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         checkUserStatus();
         super.onResume();
+    }
+
+    public void open_all_user(View view) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Alluser_Fragment alluser_fragment = new Alluser_Fragment();
+        fragmentTransaction.replace(R.id.frame, alluser_fragment);
+        fragmentTransaction.addToBackStack(Mail_Fragment.TAG6);
+        fragmentTransaction.commit();
     }
 }

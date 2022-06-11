@@ -328,8 +328,38 @@ public class ChatActivity extends AppCompatActivity {
         hashMap.put("type","text");
         databaseReference.child("chats").child(timestamp).setValue(hashMap);
         messenger.setText("");
-        sendNotification(mes);
 
+
+        //chatlist
+        DatabaseReference chatref1=FirebaseDatabase.getInstance().getReference("ChatList").child(myUid).child(hisUid);
+        chatref1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    chatref1.child("id").setValue(hisUid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        DatabaseReference chatref2=FirebaseDatabase.getInstance().getReference("ChatList").child(hisUid).child(myUid);
+        chatref2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    chatref2.child("id").setValue(myUid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        sendNotification(mes);
     }
     private void sendImageMessage(Uri image_uri) throws IOException {
 

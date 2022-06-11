@@ -28,6 +28,16 @@ public class userObject implements Serializable {
     private String user_name;
     private String profileImage;
 
+    public String getTypingTo() {
+        return typingTo;
+    }
+
+    public void setTypingTo(String typingTo) {
+        this.typingTo = typingTo;
+    }
+
+    private String typingTo;
+
     public String getUser_phone() {
         return user_phone;
     }
@@ -38,7 +48,7 @@ public class userObject implements Serializable {
 
     private String user_phone;
 
-    public userObject(String following, String follower, String sum_heart, String user_id, String onlineStatus, String email, String user_name, String profileImage, String user_phone) {
+    public userObject(String following, String follower, String sum_heart, String user_id, String onlineStatus, String email, String user_name, String profileImage, String user_phone,String typingTo) {
         this.following = following;
         this.follower = follower;
         this.sum_heart = sum_heart;
@@ -48,6 +58,7 @@ public class userObject implements Serializable {
         this.user_name = user_name;
         this.profileImage = profileImage;
         this.user_phone = user_phone;
+        this.typingTo=typingTo;
     }
 
     public userObject() {

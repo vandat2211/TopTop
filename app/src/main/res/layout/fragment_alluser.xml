@@ -5,14 +5,12 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    tools:context=".HomeActivity"
     >
     <include
         android:id="@+id/toolbar_chat"
-        layout="@layout/toolbar_user"/>
+        layout="@layout/toolbar_chat"/>
 <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recyclerView_mail"
-    tools:listitem="@layout/row_chatlist"
+    android:id="@+id/recyclerView_alluser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="center"/>
