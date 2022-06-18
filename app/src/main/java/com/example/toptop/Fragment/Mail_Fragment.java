@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Mail_Fragment extends Fragment {
@@ -66,6 +67,7 @@ public class Mail_Fragment extends Fragment {
                 for(DataSnapshot ds:snapshot.getChildren()){
                     Chatlist chatlist=ds.getValue(Chatlist.class);
                     chatlistList.add(chatlist);
+                    Collections.reverse(chatlistList);
                 }
                 LoadChats();
             }
@@ -166,8 +168,10 @@ public class Mail_Fragment extends Fragment {
                         continue;
                     }
                     if(chat.getReceiver().equals(firebaseUser.getUid())&&chat.getSender().equals(user_id)||chat.getReceiver().equals(user_id)&&chat.getSender().equals(firebaseUser.getUid())){
-                        thelastmes=chat.getMessage();
+                       if(chat.getType().equals("image")) thelastmes="image";
+                       else  thelastmes=chat.getMessage();
                     }
+
                 }
             chatlist_mail_adapter.setLastMessageMap(user_id,thelastmes);
                 chatlist_mail_adapter.notifyDataSetChanged();

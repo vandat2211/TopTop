@@ -45,8 +45,6 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.toptop.Adapter.Chat_Adapter;
 import com.example.toptop.Models.Chat;
-import com.example.toptop.Models.userObject;
-import com.example.toptop.Services.AllConstants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

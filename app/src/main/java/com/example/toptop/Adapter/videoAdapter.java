@@ -182,6 +182,34 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
                 });
             }
         });
+        holder.img_Unfollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+                mProcessfollow = true;
+                String muserId = mediaObjecttList.get(position).getUser_id();
+                FollowRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (mProcessfollow) {
+                            if (snapshot.child(muserId).hasChild(myuId)) {
+                                FollowRef.child(muserId).child(myuId).removeValue();
+                                mProcessfollow = false;
+
+                            } else {
+                                FollowRef.child(muserId).child(myuId).setValue("1");
+                                mProcessfollow = false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
         final String muserId = mediaObjecttList.get(position).getUser_id();
         setfollows(holder, muserId);
         holder.img_comments.setOnClickListener(new View.OnClickListener() {
@@ -280,8 +308,10 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(muserId).hasChild(myuId)) {
                     holder.img_follow.setVisibility(View.INVISIBLE);
+                    holder.img_Unfollow.setVisibility(View.VISIBLE);
                 } else {
                     holder.img_follow.setVisibility(View.VISIBLE);
+                    holder.img_Unfollow.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -306,7 +336,7 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
         MediaPlayer mp;
         private CircleImageView circleImageView;
         VideoView videoView;
-        ImageView img, img2, img_heart, img_follow, img_comments, img_share,img_dowload;
+        ImageView img, img2, img_heart, img_follow, img_comments, img_share,img_dowload,img_Unfollow;
         TextView users, des, tim, comeen, amthanh, hasttask;
         ProgressBar progressBar;
         MediaController controller;
@@ -316,6 +346,7 @@ public class videoAdapter extends RecyclerView.Adapter<videoAdapter.videoViewHol
             super(itemView);
             img_heart = itemView.findViewById(R.id.img_heart_main);
             img_follow = itemView.findViewById(R.id.img_follow);
+            img_Unfollow=itemView.findViewById(R.id.img_Unfollow);
             img_comments = itemView.findViewById(R.id.img_comments);
             img_share = itemView.findViewById(R.id.img_share);
             img_dowload=itemView.findViewById(R.id.img_dowload);

@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/chatcommentlayout"
-        android:layout_below="@+id/bt_cancle_comment" />
+        android:layout_below="@+id/bt_cancle_comment"
+        tools:listitem="@layout/row_comments" />
     <LinearLayout
         android:id="@+id/chatcommentlayout"
         android:layout_width="match_parent"

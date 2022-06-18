@@ -1,7 +1,6 @@
 package com.example.toptop.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptop.Anwser_CommentActivity;
 import com.example.toptop.Models.Comment;
+import com.example.toptop.Models.anwser_Comment;
 import com.example.toptop.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,18 +34,19 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.CommentHoder> {
+public class Anwser_Comment_Adapter extends RecyclerView.Adapter<Anwser_Comment_Adapter.CommentHoder> {
     Context context;
-    List<Comment> commentList;
+    List<anwser_Comment> commentList;
     boolean mProcesshearts = false;
     boolean mProcessComment = false;
-    String myuId,videoid;
-    public Comment_Adapter(Context context, List<Comment> commentList, String myuId, String videoid) {
+    String myuId,videoid,CID;
+
+    public Anwser_Comment_Adapter(Context context, List<anwser_Comment> commentList, String myuId, String videoid,String CID) {
         this.context = context;
         this.commentList = commentList;
         this.myuId = myuId;
         this.videoid = videoid;
-
+        this.CID=CID;
     }
 
     @NonNull
@@ -58,25 +59,26 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
     @Override
     public void onBindViewHolder(@NonNull CommentHoder holder, @SuppressLint("RecyclerView") int position) {
 //lay du lieu
-        String cID=commentList.get(position).getcID();
+        String cID_answer=commentList.get(position).getAnswercID();
         String uname=commentList.get(position).getUser_name();
         String uid=commentList.get(position).getUser_id();
         String imgUser=commentList.get(position).getImage_user();
         String comment=commentList.get(position).getComment();
         String time_comment=commentList.get(position).getTime_comment();
         String videoid=commentList.get(position).getVideo_id();
+        String cid=commentList.get(position).getCid();
         String countheart_comment=commentList.get(position).getHeart_comment();
-        String count_comment=commentList.get(position).getCount_comment();
         // convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(time_comment));
         String datetime = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString();
         //set the data
+        holder.img_anwser_comment.setVisibility(View.GONE);
+        holder.tv_count_comment.setVisibility(View.GONE);
         holder.tvnameuser_comment.setText(uname);
         holder.tvcomments.setText(comment);
         holder.tvtime_comment.setText(datetime);
         holder.count_heart_comment.setText(countheart_comment);
-        holder.tv_count_comment.setText(count_comment);
         try {
             Picasso.get().load(imgUser).into(holder.img_user_comment);
         }catch (Exception e){
@@ -87,19 +89,19 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
             public void onClick(View v) {
                 int hearts = Integer.parseInt(commentList.get(position).getHeart_comment());
                 mProcesshearts = true;
-                DatabaseReference Refcomments= FirebaseDatabase.getInstance().getReference("videos").child(videoid).child("comments");
+                DatabaseReference Refcomments= FirebaseDatabase.getInstance().getReference("videos").child(videoid).child("comments").child(cid).child("anwser_comments");
                 DatabaseReference likecomments= FirebaseDatabase.getInstance().getReference().child("likecomments");
                 likecomments.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (mProcesshearts) {
-                            if (snapshot.child(cID).hasChild(myuId)) {
-                                Refcomments.child(cID).child("heart_comment").setValue("" + (hearts - 1));
-                                likecomments.child(cID).child(myuId).removeValue();
+                            if (snapshot.child(cID_answer).hasChild(myuId)) {
+                                Refcomments.child(cID_answer).child("heart_comment").setValue("" + (hearts - 1));
+                                likecomments.child(cID_answer).child(myuId).removeValue();
                                 mProcesshearts = false;
                             } else {
-                                Refcomments.child(cID).child("heart_comment").setValue("" + (hearts + 1));
-                                likecomments.child(cID).child(myuId).setValue("heart");
+                                Refcomments.child(cID_answer).child("heart_comment").setValue("" + (hearts + 1));
+                                likecomments.child(cID_answer).child(myuId).setValue("heart");
                                 mProcesshearts=false;
                             }
 
@@ -115,20 +117,7 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
                 });
             }
         });
-        holder.img_anwser_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context, Anwser_CommentActivity.class);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("hisCommenId",cID);
-                    intent.putExtra("hisVideoId",videoid);
-                    intent.putExtra("hisVideo_heart",countheart_comment);
-                    context.startActivity(intent);
-                }
-            }
-        });
-        sethearts(holder,cID);
+        sethearts(holder,cID_answer);
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -143,14 +132,31 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
                         public void onClick(DialogInterface dialog, int which) {
                             mProcessComment=true;
                             DatabaseReference ref=FirebaseDatabase.getInstance().getReference("videos").child(videoid);
-                            ref.child("comments").child(cID).removeValue();
+                            ref.child("comments").child(cid).child("anwser_comments").child(cID_answer).removeValue();
                             ref.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(mProcessComment){
                                         String commentss = "" + snapshot.child("video_comment").getValue();
-                                        int newCommentVal = Integer.parseInt(commentss) - 1-Integer.parseInt(count_comment);
+                                        int newCommentVal = Integer.parseInt(commentss) - 1;
                                         ref.child("video_comment").setValue("" + newCommentVal);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            DatabaseReference refcoment=FirebaseDatabase.getInstance().getReference("videos").child(videoid).child("comments").child(cid);
+                            refcoment.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(mProcessComment){
+                                        String commentss = "" + snapshot.child("count_comment").getValue();
+                                        int newCommentVal = Integer.parseInt(commentss) - 1;
+                                        refcoment.child("count_comment").setValue("" + newCommentVal);
                                         mProcessComment = false;
                                     }
 

@@ -46,7 +46,7 @@ public class Home_customer_Fragment extends Fragment {
     private Video_customer_Adapter adapter;
     private List<MediaObjectt> mediaObjecttList;
     private HomeActivity mhomeActivity;
-
+    boolean mProcessfollow = false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

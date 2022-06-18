@@ -189,4 +189,7 @@ public class Home_customer_Fragment2 extends Fragment {
 
 
     }
+
+
+
 }

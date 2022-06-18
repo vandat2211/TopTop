@@ -14,10 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.toptop.Adapter.Comment_Adapter;
 import com.example.toptop.Models.Comment;
-import com.example.toptop.Models.MediaObjectt;
 import com.example.toptop.Models.userObject;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -45,7 +42,6 @@ public class CommentActivity extends AppCompatActivity {
     RecyclerView rcvComment;
     Comment_Adapter cmadapter;
     List<Comment> commentList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +86,7 @@ public class CommentActivity extends AppCompatActivity {
         hashMap.put("image_user", img_user);
         hashMap.put("heart_comment", "0");
         hashMap.put("video_id", videoid);
+        hashMap.put("count_comment", "0");
         //
         dt.child(timeStamp).setValue(hashMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -192,5 +189,7 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
 

@@ -19,6 +19,9 @@
             android:name=".CommentActivity"
             android:exported="false" />
         <activity
+            android:name=".Anwser_CommentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChatActivity"
             android:exported="false" />
         <activity

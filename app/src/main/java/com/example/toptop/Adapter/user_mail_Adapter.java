@@ -10,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,12 @@ import com.example.toptop.ChatActivity;
 import com.example.toptop.Models.userObject;
 import com.example.toptop.My_interface.Onclick_user_mail;
 import com.example.toptop.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +35,7 @@ Context context;
 List<userObject> userObjectList;
 List<userObject> userObjectList1;
 private Onclick_user_mail onclick_user_mail;
+String myuId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public user_mail_Adapter(Context context, List<userObject> userObjectList,Onclick_user_mail onclick_user_mail) {
         this.context = context;
@@ -55,11 +63,32 @@ private Onclick_user_mail onclick_user_mail;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Activity activity = (Activity) context;
-                Intent intent=new Intent(context, ChatActivity.class);
-                intent.putExtra("hisUid",user.getUser_id());
-                context.startActivities(new Intent[]{intent});
-                activity.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+                DatabaseReference myRefcheck = FirebaseDatabase.getInstance().getReference("follows");
+                myRefcheck.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.child(user.getUser_id()).hasChild(myuId) && snapshot.child(myuId).hasChild(user.getUser_id())) {
+                            Activity activity = (Activity) context;
+                            Intent intent = new Intent(context, ChatActivity.class);
+                            intent.putExtra("hisUid", user.getUser_id());
+                            context.startActivities(new Intent[]{intent});
+                            activity.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+
+                        }
+                        else if(!snapshot.child(user.getUser_id()).hasChild(myuId)&&snapshot.child(myuId).hasChild(user.getUser_id())) {
+                            Toast.makeText(context,"Ban ko the chat voi " +user.getUser_name() +". vi ban chua folow " +user.getUser_name(),Toast.LENGTH_SHORT).show();
+                        }else if(snapshot.child(user.getUser_id()).hasChild(myuId)&&!snapshot.child(myuId).hasChild(user.getUser_id())) {
+                            Toast.makeText(context,"Ban ko the chat voi " + user.getUser_name()+". Vi "+user.getUser_name()+" chua folow ban. ",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                            Toast.makeText(context, "Ban ko the chat voi " + user.getUser_name()+ ". vi ca 2 chua folow nhau ", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
         holder.img_user_mail.setOnClickListener(new View.OnClickListener() {

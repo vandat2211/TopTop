@@ -1,18 +1,26 @@
 package com.example.toptop.Models;
 
-public class Comment {
-    String cID,comment,user_id,user_name,time_comment,image_user,heart_comment,video_id,count_comment;
-
-    public String getCount_comment() {
-        return count_comment;
+public class anwser_Comment {
+    public String getAnswercID() {
+        return answercID;
     }
 
-    public void setCount_comment(String count_comment) {
-        this.count_comment = count_comment;
+    public void setAnswercID(String answercID) {
+        this.answercID = answercID;
     }
 
-    public Comment(String cID, String comment, String user_id, String user_name, String time_comment, String image_user, String heart_comment, String video_id, String count_comment) {
-        this.cID = cID;
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
+    String answercID,comment,user_id,user_name,time_comment,image_user,heart_comment,video_id,cid;
+
+    public anwser_Comment(String answercID, String comment, String user_id, String user_name, String time_comment, String image_user, String heart_comment, String video_id,String cid) {
+        this.answercID = answercID;
         this.comment = comment;
         this.user_id = user_id;
         this.user_name = user_name;
@@ -20,10 +28,11 @@ public class Comment {
         this.image_user=image_user;
         this.heart_comment=heart_comment;
         this.video_id=video_id;
-        this.count_comment=count_comment;
+        this.cid=cid;
+
     }
 
-    public Comment() {
+    public anwser_Comment() {
     }
 
     public String getVideo_id() {
@@ -50,9 +59,7 @@ public class Comment {
         this.heart_comment = heart_comment;
     }
 
-    public String getcID() {
-        return cID;
-    }
+
 
     public String getTime_comment() {
         return time_comment;
@@ -62,9 +69,7 @@ public class Comment {
         this.time_comment = time_comment;
     }
 
-    public void setcID(String cID) {
-        this.cID = cID;
-    }
+
 
     public String getComment() {
         return comment;

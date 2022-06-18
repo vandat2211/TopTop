@@ -59,7 +59,7 @@ public class Chatlist_mail_Adapter extends RecyclerView.Adapter<Chatlist_mail_Ad
         holder.name.setText(username);
         if (lastMes == null || lastMes.equals("default")) {
             holder.lastMessage.setVisibility(View.GONE);
-        } else {
+        } else  {
             holder.lastMessage.setVisibility(View.VISIBLE);
             holder.lastMessage.setText(lastMes);
         }
